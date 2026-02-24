@@ -1,0 +1,7 @@
+name: "stAtIstics"
+output_dir: "_site"
+navbar:
+  title: "AI in stAtIstics"
+  left:
+    - text: "Home"
+      href: index.html

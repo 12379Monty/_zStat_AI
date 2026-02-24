@@ -1,0 +1,10 @@
+git remote add origin https://github.com/12379Monty/_zStat_AI
+git branch -M master
+git push -u origin master
+
+# A Step-by-Step Guide: Deploying on Netlify
+
+Step 1: Add Your New Site
+
+...
+
