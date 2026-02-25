@@ -173,10 +173,12 @@ top of search results and I think are representative of how  he thinks and speak
 
 * MJ addresses the UC regents in 2023 - https://www.youtube.com/watch?v=AygJUbwCwJc
 
+<p><p/>
 * A couple of typical talks:
    - https://www.youtube.com/watch?v=KaFYaFquFLs
    - https://www.youtube.com/watch?v=3zlDHdtSXt4
 
+<p><p/>
 * Here is where he explains why he now lives and works in Europe - https://youtu.be/ZJGHhs6fNkY?si=tj8Vpm6Kd5S-5PbC
 
 So it appears that after several years of pushing back on the 
@@ -209,20 +211,28 @@ https://statmodeling.stat.columbia.edu/2021/08/05/the-ml-uncertainty-revolution-
 
 At a workshop on distribution-free uncertainty quantification, Michael Jordan of Berkeley alluded to how uncertainty quantification has long been a niche topic in ML, and still kind of is, but this might be shifting.
 
+<br/>
+
 ## 3. "Static sensitivity analysis" (May 29, 2017) {-}
 https://statmodeling.stat.columbia.edu/2017/05/29/static-sensitivity-analysis/
 
 Gelman writes: "After this discussion, I pointed Ryan Giordano, Tamara Broderick, and Michael Jordan to Figure 4 of this paper with Bois and Jiang as an example of 'static sensitivity analysis.'" The paper cited is Giordano, Broderick, and Jordan (2018) on sensitivity analysis.
+
+<br/>
 
 ## 4. "What are the most important statistical ideas of the past 50 years?" (December 9, 2020) {-}
 https://statmodeling.stat.columbia.edu/2020/12/09/what-are-the-most-important-statistical-ideas-of-the-past-50-years/
 
 Bob Carpenter comments: "You have people like Michael Jordan who straddle the fields and produce students straddling the fields like Dave Blei, Tamara Broderick, and Francis Bach. What's funny is that I vividly remember talks by Jordan and Hinton in psychology (CMU psych was big into 'connectionism') in the 1980s and early 90s on neural nets that everyone in CS just yawned through."
 
+<br/>
+
 ## 5. "Stan Down Under" (February 15, 2015) {-}
 https://statmodeling.stat.columbia.edu/2015/02/15/stan-3/
 
 Bob Carpenter mentions Google search diversity, noting: "you don't get 1000 hits for Michael Jordan the basketball player before the first hit for Michael Jordan the computer scientist (or maybe vice-versa these days?)."
+
+<br/>
 
 ## 6. "Eid ma clack shaw zupoven del ba" (February 7, 2018) {-}
 https://statmodeling.stat.columbia.edu/2018/02/07/eid-ma-clack-shaw-zupoven-del-ba/
@@ -235,28 +245,42 @@ On variational inference diagnostics, mentions "clever second-order corrections 
 # AI-related posts on AG's Statistical Modeling blog (2022-2025)
 
 
+<br/>
+
 ## 2022
 
 ### 1. "Chatbots: Still Dumb After All These Years" (January 2022) {-}
 https://statmodeling.stat.columbia.edu/2022/01/
 Discussion of chatbot limitations before the ChatGPT era.
 
+<br/>
+
 ### 2. "A chatbot challenge for Blaise Agüera y Arcas and Gary Smith" (January 2022) {-}
 Early discussion challenging claims about chatbot capabilities.
+
+<br/>
 
 ### 3. "We have really everything in common with machine learning nowadays, except, of course, language" (May 13, 2022) {-}
 https://statmodeling.stat.columbia.edu/2022/05/13/we-have-really-everything-in-common-with-machine-learning-nowadays-except-of-course-language/
 
 Bob Carpenter had an interesting exchange with Andrew regarding the differences between statistics and machine learning, noting that "the two subfields also have different priorities and concepts" beyond just jargon differences.
 
+<br/>
+
 ### 4. "From chatbots and understanding to appliance repair and statistical practice" (August 2022) {-}
 Exploring the gap between AI claims and practical capabilities.
+
+<br/>
 
 ### 5. "NeurIPS Ethics Code of Conduct" (May 2022) {-}
 Discussion of the NeurIPS document "detailing a code of ethics, essentially listing concerns considered fair game for critiquing (possibly even rejecting) submitted papers" in machine learning.
 
+<br/>
+
 ### 6. "The worst of both worlds: A comparative analysis of errors in learning from data in psychology and machine learning" (2022) {-}
 Published paper by Jessica Hullman, Sayash Kapoor, Andrew Gelman, and others comparing methodological problems in psychology and ML.
+
+<br/>
 
 ### 7. Bob Carpenter on the term "learning" (July 20, 2022) {-}
 https://statmodeling.stat.columbia.edu/tag/ai/
@@ -272,48 +296,68 @@ https://statmodeling.stat.columbia.edu/2023/01/14/bayesian-statistics-and-machin
 
 Gelman writes: "I associate machine learning with big models fit to big data and minimal assumptions: instead of assigning a structure to a model or using strong priors, you just use tons of training data... In contrast, I associate Bayesian inference with strong structures and strong priors. That is, the model is doing a lot of the work."
 
+<br/>
+
 ### 9. "Predicting LLM havoc" (March 15, 2023) {-}
 https://statmodeling.stat.columbia.edu/2023/03/15/predicting-llm-havoc/
 
 Discussion of LLM deception: "What most captured my attention though is his argument about predictable deception, where a model fools or manipulates the (human) supervisor rather than doing the desired tasks, because doing so gets it better or equal reward."
 
+<br/>
+
 ### 10. "AI as Wiley E. Coyote, and a funny thing about Worstfish" (June 2023)
 AI skepticism and the gap between hype and reality.
+
+<br/>
 
 ### 11. "Slides on large language models for statisticians" (July 26, 2023)
 https://statmodeling.stat.columbia.edu/2023/07/26/slides-on-large-language-models-for-statisticians/
 
 Bob Carpenter's tutorial on LLMs for statisticians, with discussion of ChatGPT's strengths in code generation and weaknesses in mathematics.
 
+<br/>
+
 ### 12. "Artificial intelligence and aesthetic judgment" (August 16, 2023)
 https://statmodeling.stat.columbia.edu/2023/08/16/artificial-intelligence-and-aesthetic-judgment/
 
 Jessica Hullman, Ari Holtzman, and Andrew Gelman write: "Generative AIs produce creative outputs in the style of human expression. We argue that encounters with the outputs of modern generative AI models are mediated by the same kinds of aesthetic judgments that organize our interactions with artwork."
+
+<br/>
 
 ### 13. "Report on the large language model meeting at Berkeley" (August 20, 2023)
 https://statmodeling.stat.columbia.edu/2023/08/20/report-on-the-large-language-model-meeting-at-berkeley/
 
 Bob Carpenter's extensive report on the Simons Institute workshop on LLMs and transformers. "'In-context learning' is what people call an LLM's ability to be given zero or more examples and then to complete the pattern... ChatGPT can manage all sorts of nuanced language tasks given only a few examples."
 
+<br/>
+
 ### 14. "ChatGPT (4) can do 3-digit multiplication" (August 30, 2023)
 https://statmodeling.stat.columbia.edu/2023/08/30/chatgpt-4-can-do-3-digit-multiplication/
 
 Testing GPT-4's arithmetic capabilities and discussion of what LLMs can and cannot understand.
+
+<br/>
 
 ### 15. "Beneath every application of causal inference to ML lies a ridiculously hard social science problem" (October 2, 2023)
 https://statmodeling.stat.columbia.edu/2023/10/02/beneath-every-application-of-causal-inference-to-ml-lies-a-ridiculously-hard-social-science-problem/
 
 Jessica Hullman discusses Zach Lipton's talk: "there's been considerable reflection lately on methods in machine learning, as it has become painfully obvious that accuracy on held-out IID data is often not a good predictor of model performance in a real-world deployment."
 
+<br/>
+
 ### 16. "Frictionless reproducibility; methods as proto-algorithms; statisticians well prepared to think about issues raised by AI" (October 13, 2023)
 https://statmodeling.stat.columbia.edu/2023/10/13/frictionless-reproducibility-methods-as-proto-algorithms-division-of-labor-as-a-characteristic-of-statistical-methods-statistics-as-the-science-of-defaults-statisticians-well-prepared-to-think-abo/
 
 "Computer scientists have developed general tools (convolutional neural nets, autoencoders, normalizing flows, diffusions, attention and transformers) that can be widely applied to solve problems like natural language understanding, image recognition, protein folding..."
 
+<br/>
+
 ### 17. "More than 10k scientific papers were retracted in 2023" (December 18, 2023)
 https://statmodeling.stat.columbia.edu/2023/12/18/more-than-10k-scientific-papers-were-retracted-in-2023/
 
 Discussion of how ChatGPT-generated papers are being detected and the impact on scientific publishing.
+
+<br/>
 
 ### 18. "Explainable AI works, but only when we don't need it" (December 19, 2023)
 https://statmodeling.stat.columbia.edu/2023/12/19/explainable-ai-works-but-only-when-we-dont-need-it/
@@ -329,33 +373,47 @@ https://statmodeling.stat.columbia.edu/2024/01/04/progress-in-2023/
 
 Lists "Artificial intelligence and aesthetic judgment" among Andrew's publications for 2023.
 
+<br/>
+
 ### 20. "International Cherry Blossom Prediction Competition with AI" (February 2024)
 https://statmodeling.stat.columbia.edu/tag/ai/
 
 "This year, contestants will not only compete against each other for the top prizes—but against artificial intelligence. We will include one or more submissions from the most popular large language models... Any human that beats the AI will receive commemorative memorabilia indicating they 'beat the bot in the 2025 International Cherry Blossom Prediction Competition.'"
+
+<br/>
 
 ### 21. "Broader impact statements in machine learning papers" (February 28, 2024)
 https://statmodeling.stat.columbia.edu/2024/02/28/
 
 Jessica Hullman discusses NeurIPS requirements for broader impact statements, noting "Doubts about whether AI/ML researchers are qualified to be reflecting on the broader impacts of their work."
 
+<br/>
+
 ### 22. "Re-reading Neuromancer in the age of AI" (2024)
 https://statmodeling.stat.columbia.edu/tag/ai/
 
 Phil revisits Gibson's 1984 novel: "In Neuromancer we encounter two types of artificial intelligence: artificial _general_ intelligence, as personified (machinified?) by AI's known as Wintermute and Neuromancer; and 'constructs'... Just think of the construct as an LLM that is trained to respond like a specific real person."
 
+<br/>
+
 ### 23. "More red meat for you AI skeptics out there" (May 2024)
 Continued documentation of AI limitations and hype.
+
+<br/>
 
 ### 24. "Forking paths in LLMs for data analysis" (June 24, 2024)
 https://statmodeling.stat.columbia.edu/2024/06/24/forking-paths-in-llms-for-data-analysis/
 
 "LLMs are threatening because they would seem to make this kind of approach easier. For example, dealing with data formatting issues remains a major time-sink in analysis, especially for users who are not programmers, but ChatGPT at least superficially seems tolerant of whatever you want to paste in."
 
+<br/>
+
 ### 25. "NeurIPS 2024 workshop on Statistical Frontiers in LLMs and Foundation Models" (August 9, 2024)
 https://statmodeling.stat.columbia.edu/2024/08/09/neurips-2024-workshop-on-statistical-frontiers-in-llms-and-foundation-models/
 
 Jessica Hullman announces a workshop on "statistical methods development for LLMs and foundation models," covering topics including "Watermarking... for identifying AI-generated content," "Conformal prediction and black-box uncertainty quantification," and "Auditing, safety, and risk analysis."
+
+<br/>
 
 ### 26. "New Course: Prediction for (Individualized) Decision-making" (December 6, 2024)
 https://statmodeling.stat.columbia.edu/2024/12/06/new-course-prediction-for-individualized-decision-making/
@@ -370,6 +428,8 @@ Course syllabus with extensive AI-related readings including papers on AI-assist
 https://statmodeling.stat.columbia.edu/
 
 Gary Smith's experiments showing "LLMs are undeniably astonishingly good at using the text they trained on (aided by human fine tuners) to generate convincing prose. But they are really bad at distinguishing between truth and falsehoods and responding to prompts that are unlike or even slightly different from what they trained on."
+
+<br/>
 
 ### 28. "Progress in 2024 (Aki)" (January 7, 2025)
 https://statmodeling.stat.columbia.edu/2025/01/07/progress-in-2024-aki/

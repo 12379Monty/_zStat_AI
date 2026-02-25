@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2026-02-25" />
+
+<title>AI in StAtIstics</title>
+
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">AI in stAtIstics</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">AI in StAtIstics</h1>
+<h4 class="date">February 25, 2026</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction" id="toc-introduction"><span
+class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#terry-speed-on-aidata-science"
+id="toc-terry-speed-on-aidata-science"><span
+class="toc-section-number">2</span> Terry Speed on AI/Data Science</a>
+<ul>
+<li><a href="#on-data-science" id="toc-on-data-science"><span
+class="toc-section-number">2.1</span> On Data Science</a></li>
+<li><a href="#on-machine-learning-and-statistics"
+id="toc-on-machine-learning-and-statistics"><span
+class="toc-section-number">2.2</span> On Machine Learning and
+Statistics</a></li>
+<li><a href="#current-ai-research" id="toc-current-ai-research"><span
+class="toc-section-number">2.3</span> Current AI Research</a></li>
+<li><a href="#additional-findings-on-terry-speed"
+id="toc-additional-findings-on-terry-speed"><span
+class="toc-section-number">2.4</span> Additional Findings on Terry
+Speed</a></li>
+<li><a href="#summary-characterization"
+id="toc-summary-characterization"><span
+class="toc-section-number">2.5</span> Summary Characterization</a></li>
+</ul></li>
+<li><a href="#michael-jordans-farewell-tour"
+id="toc-michael-jordans-farewell-tour"><span
+class="toc-section-number">3</span> Michael Jordan’s Farewell
+Tour</a></li>
+<li><a href="#michael-jordan-mentions-on-andrew-gelmans-blog"
+id="toc-michael-jordan-mentions-on-andrew-gelmans-blog"><span
+class="toc-section-number">4</span> Michael Jordan mentions on Andrew
+Gelman’s blog</a>
+<ul>
+<li><a href="#no-michael-jordan-didnt-say-that-october-23-2014"
+id="toc-no-michael-jordan-didnt-say-that-october-23-2014">1. “No,
+Michael Jordan didn’t say that!” (October 23, 2014)</a></li>
+<li><a href="#the-ml-uncertainty-revolution-is-now-august-5-2021"
+id="toc-the-ml-uncertainty-revolution-is-now-august-5-2021">2. “The ML
+uncertainty revolution is … now?” (August 5, 2021)</a></li>
+<li><a href="#static-sensitivity-analysis-may-29-2017"
+id="toc-static-sensitivity-analysis-may-29-2017">3. “Static sensitivity
+analysis” (May 29, 2017)</a></li>
+<li><a
+href="#what-are-the-most-important-statistical-ideas-of-the-past-50-years-december-9-2020"
+id="toc-what-are-the-most-important-statistical-ideas-of-the-past-50-years-december-9-2020">4.
+“What are the most important statistical ideas of the past 50 years?”
+(December 9, 2020)</a></li>
+<li><a href="#stan-down-under-february-15-2015"
+id="toc-stan-down-under-february-15-2015">5. “Stan Down Under” (February
+15, 2015)</a></li>
+<li><a href="#eid-ma-clack-shaw-zupoven-del-ba-february-7-2018"
+id="toc-eid-ma-clack-shaw-zupoven-del-ba-february-7-2018">6. “Eid ma
+clack shaw zupoven del ba” (February 7, 2018)</a></li>
+</ul></li>
+<li><a
+href="#ai-related-posts-on-ags-statistical-modeling-blog-2022-2025"
+id="toc-ai-related-posts-on-ags-statistical-modeling-blog-2022-2025"><span
+class="toc-section-number">5</span> AI-related posts on AG’s Statistical
+Modeling blog (2022-2025)</a>
+<ul>
+<li><a href="#section" id="toc-section"><span
+class="toc-section-number">5.1</span> 2022</a></li>
+<li><a href="#section-1" id="toc-section-1"><span
+class="toc-section-number">5.2</span> 2023</a></li>
+<li><a href="#section-2" id="toc-section-2"><span
+class="toc-section-number">5.3</span> 2024</a></li>
+<li><a href="#section-3" id="toc-section-3"><span
+class="toc-section-number">5.4</span> 2025</a></li>
+</ul></li>
+<li><a href="#key-recurring-themes-across-posts"
+id="toc-key-recurring-themes-across-posts"><span
+class="toc-section-number">6</span> Key Recurring Themes Across
+Posts</a></li>
+<li><a href="#sources" id="toc-sources"><span
+class="toc-section-number">7</span> Sources</a>
+<ul>
+<li><a href="#terry-speed-sources" id="toc-terry-speed-sources"><span
+class="toc-section-number">7.1</span> Terry Speed Sources</a></li>
+<li><a href="#andrew-gelmans-blog" id="toc-andrew-gelmans-blog"><span
+class="toc-section-number">7.2</span> Andrew Gelman’s Blog:</a></li>
+</ul></li>
+</ul>
+</div>
+
+<!-- 
+
+<p style="background-color: yellow; padding: 5px;">
+  <span style="font-weight: bold;">⚠️ Work in Progress:</span> This content is incomplete.
+</p>
+
+-->
+<!-- ######################################################################## -->
+<!-- ######################################################################## -->
+<p><br/></p>
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p><strong>TBC</strong></p>
+<p><br/></p>
+</div>
+<div id="terry-speed-on-aidata-science" class="section level1"
+number="2">
+<h1><span class="header-section-number">2</span> Terry Speed on AI/Data
+Science</h1>
+<p><br/></p>
+<div id="on-data-science" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> On Data Science</h2>
+<p>His most direct statement on the AI/data science debate:</p>
+<p>Speed commented on the data science movement, asking: “Are we doing
+such a bad job that we need to rename ourselves data scientists to
+capture the imagination of future students, collaborators, or clients?
+Are we so lacking in confidence … that we shiver in our shoes the moment
+a potential usurper appears on the scene? Or, has there really been a
+fundamental shift around us, so that our old clumsy ways of adapting and
+evolving are no longer adequate?”</p>
+<p>He continued with a defense of statistics’ enduring value: “I think
+we have a great tradition and a great future, both far longer than the
+concentration span of funding agencies, university faculties, and
+foundations. … We might miss out on the millions being lavished on data
+science right now, but that’s no reason for us to stop trying to do the
+best we can at what we do best, something that is far wider and deeper
+than data science.”</p>
+<p><br/></p>
+</div>
+<div id="on-machine-learning-and-statistics" class="section level2"
+number="2.2">
+<h2><span class="header-section-number">2.2</span> On Machine Learning
+and Statistics</h2>
+<p>In a 2006 column and 2016 AMSTAT interview, Speed observed that
+computer science, machine learning, image analysis, information theory
+and bioinformatics have all provided future statisticians to statistics
+departments around the world in recent years, and that “there are
+misunderstandings on both sides about what statistics and statisticians
+can and should do.” He characterized the data science movement as “a
+necessary correction for our community” while acknowledging that “there
+is no doubt in my mind that there are real and important issues here,
+mixed in with the usual human characteristics of exaggeration (hype),
+oversimplifying, competition for resources (turf battles), and so
+on.”</p>
+<p><br/></p>
+</div>
+<div id="current-ai-research" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Current AI
+Research</h2>
+<p>More recently, Speed has been part of a team at WEHI that developed
+AI-based methodology to remove unwanted variation from biomedical data,
+showing his practical engagement with machine learning methods in his
+genomics work.</p>
+<p>Speed’s perspective appears to be that of a pragmatic statistician
+who values what works over ideological debates about methodology, while
+defending statistics as a discipline with deeper foundations than any
+single technological wave.</p>
+<hr />
+</div>
+<div id="additional-findings-on-terry-speed" class="section level2"
+number="2.4">
+<h2><span class="header-section-number">2.4</span> Additional Findings
+on Terry Speed</h2>
+<div id="background" class="section level3 unnumbered">
+<h3 class="unnumbered">Background</h3>
+<p>Terry Speed (born 1943) is an Australian statistician known for:</p>
+<ul>
+<li>Professor at UC Berkeley (Statistics) and WEHI (Bioinformatics)</li>
+<li>Expert on microarray analysis and statistical genetics</li>
+<li>2013 Prime Minister’s Prize for Science winner</li>
+<li>Long-running IMS Bulletin column “Terence’s Stuff” (now
+discontinued)</li>
+</ul>
+<p><br/></p>
+</div>
+<div id="on-principled-methods" class="section level3 unnumbered">
+<h3 class="unnumbered">On “Principled” Methods</h3>
+<ul>
+<li>2016 IMS Bulletin column</li>
+</ul>
+<p>Speed objected to describing statistical methods as “principled,”
+arguing: “If a statistical analysis is clearly shown to be effective …
+it gains nothing from being … principled.” He criticized the implication
+that other approaches are “unprincipled.”</p>
+<p><br/></p>
+</div>
+<div id="on-statistician-perceptions" class="section level3 unnumbered">
+<h3 class="unnumbered">On Statistician Perceptions</h3>
+<ul>
+<li>2014 IMS column cited by Bin Yu</li>
+</ul>
+<p>Speed quoted an outsider view that statisticians “don’t deal with
+risk, with uncertainty… we’re too absolute, we do p-values, confidence
+intervals, definite things like that.” Scientists wanted “actionable
+insight” not “arcane concerns about mathematical methods.”</p>
+<p><br/></p>
+</div>
+<div id="wehi-ai-work" class="section level3 unnumbered">
+<h3 class="unnumbered">2023 WEHI AI Work</h3>
+<p>Speed’s team (with Papenfuss, Molania) developed AI-based methodology
+to remove unwanted variation from biomedical data, published in Nature
+Biotechnology. Applied to Cancer Genome Atlas (10,000 patient samples,
+33 cancer types).</p>
+<p><br/></p>
+</div>
+</div>
+<div id="summary-characterization" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Summary
+Characterization</h2>
+<p>Speed’s stance: pragmatic defender of statistics as discipline while
+acknowledging legitimate critiques. Values what works over ideological
+purity. Skeptical of hype and rebranding but engaged with ML methods in
+practice. Sees statistics as having “wider and deeper” foundations than
+data science trends.</p>
+<hr />
+</div>
+</div>
+<div id="michael-jordans-farewell-tour" class="section level1"
+number="3">
+<h1><span class="header-section-number">3</span> Michael Jordan’s
+Farewell Tour</h1>
+<p>I thought the Michael Jordan was the best person to champion sanity
+and reason in this period of unconstrained hype and awe. Here are a few
+links - there are many more but these came at the top of search results
+and I think are representative of how he thinks and speaks:</p>
+<ul>
+<li>MJ addresses the UC regents in 2023 - <a
+href="https://www.youtube.com/watch?v=AygJUbwCwJc"
+class="uri">https://www.youtube.com/watch?v=AygJUbwCwJc</a></li>
+</ul>
+<p>
+<p/>
+<ul>
+<li>A couple of typical talks:
+<ul>
+<li><a href="https://www.youtube.com/watch?v=KaFYaFquFLs"
+class="uri">https://www.youtube.com/watch?v=KaFYaFquFLs</a></li>
+<li><a href="https://www.youtube.com/watch?v=3zlDHdtSXt4"
+class="uri">https://www.youtube.com/watch?v=3zlDHdtSXt4</a></li>
+</ul></li>
+</ul>
+<p>
+<p/>
+<ul>
+<li>Here is where he explains why he now lives and works in Europe - <a
+href="https://youtu.be/ZJGHhs6fNkY?si=tj8Vpm6Kd5S-5PbC"
+class="uri">https://youtu.be/ZJGHhs6fNkY?si=tj8Vpm6Kd5S-5PbC</a></li>
+</ul>
+<p>So it appears that after several years of pushing back on the Silicon
+Valley mindset regarding AI, MJ decided to pack up and go work with
+people with a more similar mindset. So my champion said
+<strong>F-it</strong> to the prevailing mindset and left. That doesn’t
+fare too well, for me and other journeyman statisticians, who just want
+to provide guidance on how best to collect, analyze and interpret data
+in the face of variability.<a href="#fn1" class="footnote-ref"
+id="fnref1"><sup>1</sup></a></p>
+<p><br/></p>
+<hr />
+</div>
+<div id="michael-jordan-mentions-on-andrew-gelmans-blog"
+class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Michael Jordan mentions
+on Andrew Gelman’s blog</h1>
+<div id="no-michael-jordan-didnt-say-that-october-23-2014"
+class="section level2 unnumbered">
+<h2 class="unnumbered">1. “No, Michael Jordan didn’t say that!” (October
+23, 2014)</h2>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2014/10/23/michael-jordan-didnt-say/"
+class="uri">https://statmodeling.stat.columbia.edu/2014/10/23/michael-jordan-didnt-say/</a></p>
+<p>This post discusses a controversy over an IEEE Spectrum interview
+with Jordan about AI and big data. Bob Carpenter notes that Jordan
+claimed it was “patently false” to think there is any neuroscience
+behind current Deep Learning and machine learning techniques, and that
+we are “not yet in an era” where we can use brain understanding to
+create intelligent computer systems. The post includes a lively debate
+in comments between the journalist Lee Gomes and readers about the
+accuracy of the interview framing.</p>
+<p><br/></p>
+</div>
+<div id="the-ml-uncertainty-revolution-is-now-august-5-2021"
+class="section level2 unnumbered">
+<h2 class="unnumbered">2. “The ML uncertainty revolution is … now?”
+(August 5, 2021)</h2>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2021/08/05/the-ml-uncertainty-revolution-is-now/"
+class="uri">https://statmodeling.stat.columbia.edu/2021/08/05/the-ml-uncertainty-revolution-is-now/</a></p>
+<p>At a workshop on distribution-free uncertainty quantification,
+Michael Jordan of Berkeley alluded to how uncertainty quantification has
+long been a niche topic in ML, and still kind of is, but this might be
+shifting.</p>
+<p><br/></p>
+</div>
+<div id="static-sensitivity-analysis-may-29-2017"
+class="section level2 unnumbered">
+<h2 class="unnumbered">3. “Static sensitivity analysis” (May 29,
+2017)</h2>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2017/05/29/static-sensitivity-analysis/"
+class="uri">https://statmodeling.stat.columbia.edu/2017/05/29/static-sensitivity-analysis/</a></p>
+<p>Gelman writes: “After this discussion, I pointed Ryan Giordano,
+Tamara Broderick, and Michael Jordan to Figure 4 of this paper with Bois
+and Jiang as an example of ‘static sensitivity analysis.’” The paper
+cited is Giordano, Broderick, and Jordan (2018) on sensitivity
+analysis.</p>
+<p><br/></p>
+</div>
+<div
+id="what-are-the-most-important-statistical-ideas-of-the-past-50-years-december-9-2020"
+class="section level2 unnumbered">
+<h2 class="unnumbered">4. “What are the most important statistical ideas
+of the past 50 years?” (December 9, 2020)</h2>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2020/12/09/what-are-the-most-important-statistical-ideas-of-the-past-50-years/"
+class="uri">https://statmodeling.stat.columbia.edu/2020/12/09/what-are-the-most-important-statistical-ideas-of-the-past-50-years/</a></p>
+<p>Bob Carpenter comments: “You have people like Michael Jordan who
+straddle the fields and produce students straddling the fields like Dave
+Blei, Tamara Broderick, and Francis Bach. What’s funny is that I vividly
+remember talks by Jordan and Hinton in psychology (CMU psych was big
+into ‘connectionism’) in the 1980s and early 90s on neural nets that
+everyone in CS just yawned through.”</p>
+<p><br/></p>
+</div>
+<div id="stan-down-under-february-15-2015"
+class="section level2 unnumbered">
+<h2 class="unnumbered">5. “Stan Down Under” (February 15, 2015)</h2>
+<p><a href="https://statmodeling.stat.columbia.edu/2015/02/15/stan-3/"
+class="uri">https://statmodeling.stat.columbia.edu/2015/02/15/stan-3/</a></p>
+<p>Bob Carpenter mentions Google search diversity, noting: “you don’t
+get 1000 hits for Michael Jordan the basketball player before the first
+hit for Michael Jordan the computer scientist (or maybe vice-versa these
+days?).”</p>
+<p><br/></p>
+</div>
+<div id="eid-ma-clack-shaw-zupoven-del-ba-february-7-2018"
+class="section level2 unnumbered">
+<h2 class="unnumbered">6. “Eid ma clack shaw zupoven del ba” (February
+7, 2018)</h2>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2018/02/07/eid-ma-clack-shaw-zupoven-del-ba/"
+class="uri">https://statmodeling.stat.columbia.edu/2018/02/07/eid-ma-clack-shaw-zupoven-del-ba/</a></p>
+<p>On variational inference diagnostics, mentions “clever second-order
+corrections (like the one proposed by Ryan Giordano, Tamara Broderick,
+and Michael Jordan)” for improving variational posteriors.</p>
+<hr />
+</div>
+</div>
+<div id="ai-related-posts-on-ags-statistical-modeling-blog-2022-2025"
+class="section level1" number="5">
+<h1><span class="header-section-number">5</span> AI-related posts on
+AG’s Statistical Modeling blog (2022-2025)</h1>
+<p><br/></p>
+<div id="section" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> 2022</h2>
+<div id="chatbots-still-dumb-after-all-these-years-january-2022"
+class="section level3 unnumbered">
+<h3 class="unnumbered">1. “Chatbots: Still Dumb After All These Years”
+(January 2022)</h3>
+<p><a href="https://statmodeling.stat.columbia.edu/2022/01/"
+class="uri">https://statmodeling.stat.columbia.edu/2022/01/</a>
+Discussion of chatbot limitations before the ChatGPT era.</p>
+<p><br/></p>
+</div>
+<div
+id="a-chatbot-challenge-for-blaise-agüera-y-arcas-and-gary-smith-january-2022"
+class="section level3 unnumbered">
+<h3 class="unnumbered">2. “A chatbot challenge for Blaise Agüera y Arcas
+and Gary Smith” (January 2022)</h3>
+<p>Early discussion challenging claims about chatbot capabilities.</p>
+<p><br/></p>
+</div>
+<div
+id="we-have-really-everything-in-common-with-machine-learning-nowadays-except-of-course-language-may-13-2022"
+class="section level3 unnumbered">
+<h3 class="unnumbered">3. “We have really everything in common with
+machine learning nowadays, except, of course, language” (May 13,
+2022)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2022/05/13/we-have-really-everything-in-common-with-machine-learning-nowadays-except-of-course-language/"
+class="uri">https://statmodeling.stat.columbia.edu/2022/05/13/we-have-really-everything-in-common-with-machine-learning-nowadays-except-of-course-language/</a></p>
+<p>Bob Carpenter had an interesting exchange with Andrew regarding the
+differences between statistics and machine learning, noting that “the
+two subfields also have different priorities and concepts” beyond just
+jargon differences.</p>
+<p><br/></p>
+</div>
+<div
+id="from-chatbots-and-understanding-to-appliance-repair-and-statistical-practice-august-2022"
+class="section level3 unnumbered">
+<h3 class="unnumbered">4. “From chatbots and understanding to appliance
+repair and statistical practice” (August 2022)</h3>
+<p>Exploring the gap between AI claims and practical capabilities.</p>
+<p><br/></p>
+</div>
+<div id="neurips-ethics-code-of-conduct-may-2022"
+class="section level3 unnumbered">
+<h3 class="unnumbered">5. “NeurIPS Ethics Code of Conduct” (May
+2022)</h3>
+<p>Discussion of the NeurIPS document “detailing a code of ethics,
+essentially listing concerns considered fair game for critiquing
+(possibly even rejecting) submitted papers” in machine learning.</p>
+<p><br/></p>
+</div>
+<div
+id="the-worst-of-both-worlds-a-comparative-analysis-of-errors-in-learning-from-data-in-psychology-and-machine-learning-2022"
+class="section level3 unnumbered">
+<h3 class="unnumbered">6. “The worst of both worlds: A comparative
+analysis of errors in learning from data in psychology and machine
+learning” (2022)</h3>
+<p>Published paper by Jessica Hullman, Sayash Kapoor, Andrew Gelman, and
+others comparing methodological problems in psychology and ML.</p>
+<p><br/></p>
+</div>
+<div id="bob-carpenter-on-the-term-learning-july-20-2022"
+class="section level3 unnumbered">
+<h3 class="unnumbered">7. Bob Carpenter on the term “learning” (July 20,
+2022)</h3>
+<p><a href="https://statmodeling.stat.columbia.edu/tag/ai/"
+class="uri">https://statmodeling.stat.columbia.edu/tag/ai/</a></p>
+<p>“If I were the lexical police, I would’ve blacklisted the term
+‘learning,’ because we’re really just estimating parameters (aka
+‘weights’) of a statistical model. I felt bad saying ‘learning’ even
+back when I worked in ML full time, but that’s probably just because I
+lived through the AI winter during which the quickest route to rejection
+of a paper or grant was to mention ‘artificial intelligence.’”</p>
+<hr />
+</div>
+</div>
+<div id="section-1" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> 2023</h2>
+<div
+id="bayesian-statistics-and-machine-learning-how-do-they-differ-january-14-2023"
+class="section level3 unnumbered">
+<h3 class="unnumbered">8. “Bayesian statistics and machine learning: How
+do they differ?” (January 14, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/01/14/bayesian-statistics-and-machine-learning-how-do-they-differ/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/01/14/bayesian-statistics-and-machine-learning-how-do-they-differ/</a></p>
+<p>Gelman writes: “I associate machine learning with big models fit to
+big data and minimal assumptions: instead of assigning a structure to a
+model or using strong priors, you just use tons of training data… In
+contrast, I associate Bayesian inference with strong structures and
+strong priors. That is, the model is doing a lot of the work.”</p>
+<p><br/></p>
+</div>
+<div id="predicting-llm-havoc-march-15-2023"
+class="section level3 unnumbered">
+<h3 class="unnumbered">9. “Predicting LLM havoc” (March 15, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/03/15/predicting-llm-havoc/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/03/15/predicting-llm-havoc/</a></p>
+<p>Discussion of LLM deception: “What most captured my attention though
+is his argument about predictable deception, where a model fools or
+manipulates the (human) supervisor rather than doing the desired tasks,
+because doing so gets it better or equal reward.”</p>
+<p><br/></p>
+</div>
+<div
+id="ai-as-wiley-e.-coyote-and-a-funny-thing-about-worstfish-june-2023"
+class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> 10. “AI as Wiley E.
+Coyote, and a funny thing about Worstfish” (June 2023)</h3>
+<p>AI skepticism and the gap between hype and reality.</p>
+<p><br/></p>
+</div>
+<div id="slides-on-large-language-models-for-statisticians-july-26-2023"
+class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> 11. “Slides on
+large language models for statisticians” (July 26, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/07/26/slides-on-large-language-models-for-statisticians/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/07/26/slides-on-large-language-models-for-statisticians/</a></p>
+<p>Bob Carpenter’s tutorial on LLMs for statisticians, with discussion
+of ChatGPT’s strengths in code generation and weaknesses in
+mathematics.</p>
+<p><br/></p>
+</div>
+<div id="artificial-intelligence-and-aesthetic-judgment-august-16-2023"
+class="section level3" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> 12. “Artificial
+intelligence and aesthetic judgment” (August 16, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/08/16/artificial-intelligence-and-aesthetic-judgment/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/08/16/artificial-intelligence-and-aesthetic-judgment/</a></p>
+<p>Jessica Hullman, Ari Holtzman, and Andrew Gelman write: “Generative
+AIs produce creative outputs in the style of human expression. We argue
+that encounters with the outputs of modern generative AI models are
+mediated by the same kinds of aesthetic judgments that organize our
+interactions with artwork.”</p>
+<p><br/></p>
+</div>
+<div
+id="report-on-the-large-language-model-meeting-at-berkeley-august-20-2023"
+class="section level3" number="5.2.4">
+<h3><span class="header-section-number">5.2.4</span> 13. “Report on the
+large language model meeting at Berkeley” (August 20, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/08/20/report-on-the-large-language-model-meeting-at-berkeley/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/08/20/report-on-the-large-language-model-meeting-at-berkeley/</a></p>
+<p>Bob Carpenter’s extensive report on the Simons Institute workshop on
+LLMs and transformers. “‘In-context learning’ is what people call an
+LLM’s ability to be given zero or more examples and then to complete the
+pattern… ChatGPT can manage all sorts of nuanced language tasks given
+only a few examples.”</p>
+<p><br/></p>
+</div>
+<div id="chatgpt-4-can-do-3-digit-multiplication-august-30-2023"
+class="section level3" number="5.2.5">
+<h3><span class="header-section-number">5.2.5</span> 14. “ChatGPT (4)
+can do 3-digit multiplication” (August 30, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/08/30/chatgpt-4-can-do-3-digit-multiplication/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/08/30/chatgpt-4-can-do-3-digit-multiplication/</a></p>
+<p>Testing GPT-4’s arithmetic capabilities and discussion of what LLMs
+can and cannot understand.</p>
+<p><br/></p>
+</div>
+<div
+id="beneath-every-application-of-causal-inference-to-ml-lies-a-ridiculously-hard-social-science-problem-october-2-2023"
+class="section level3" number="5.2.6">
+<h3><span class="header-section-number">5.2.6</span> 15. “Beneath every
+application of causal inference to ML lies a ridiculously hard social
+science problem” (October 2, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/10/02/beneath-every-application-of-causal-inference-to-ml-lies-a-ridiculously-hard-social-science-problem/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/10/02/beneath-every-application-of-causal-inference-to-ml-lies-a-ridiculously-hard-social-science-problem/</a></p>
+<p>Jessica Hullman discusses Zach Lipton’s talk: “there’s been
+considerable reflection lately on methods in machine learning, as it has
+become painfully obvious that accuracy on held-out IID data is often not
+a good predictor of model performance in a real-world deployment.”</p>
+<p><br/></p>
+</div>
+<div
+id="frictionless-reproducibility-methods-as-proto-algorithms-statisticians-well-prepared-to-think-about-issues-raised-by-ai-october-13-2023"
+class="section level3" number="5.2.7">
+<h3><span class="header-section-number">5.2.7</span> 16. “Frictionless
+reproducibility; methods as proto-algorithms; statisticians well
+prepared to think about issues raised by AI” (October 13, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/10/13/frictionless-reproducibility-methods-as-proto-algorithms-division-of-labor-as-a-characteristic-of-statistical-methods-statistics-as-the-science-of-defaults-statisticians-well-prepared-to-think-abo/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/10/13/frictionless-reproducibility-methods-as-proto-algorithms-division-of-labor-as-a-characteristic-of-statistical-methods-statistics-as-the-science-of-defaults-statisticians-well-prepared-to-think-abo/</a></p>
+<p>“Computer scientists have developed general tools (convolutional
+neural nets, autoencoders, normalizing flows, diffusions, attention and
+transformers) that can be widely applied to solve problems like natural
+language understanding, image recognition, protein folding…”</p>
+<p><br/></p>
+</div>
+<div
+id="more-than-10k-scientific-papers-were-retracted-in-2023-december-18-2023"
+class="section level3" number="5.2.8">
+<h3><span class="header-section-number">5.2.8</span> 17. “More than 10k
+scientific papers were retracted in 2023” (December 18, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/12/18/more-than-10k-scientific-papers-were-retracted-in-2023/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/12/18/more-than-10k-scientific-papers-were-retracted-in-2023/</a></p>
+<p>Discussion of how ChatGPT-generated papers are being detected and the
+impact on scientific publishing.</p>
+<p><br/></p>
+</div>
+<div
+id="explainable-ai-works-but-only-when-we-dont-need-it-december-19-2023"
+class="section level3" number="5.2.9">
+<h3><span class="header-section-number">5.2.9</span> 18. “Explainable AI
+works, but only when we don’t need it” (December 19, 2023)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2023/12/19/explainable-ai-works-but-only-when-we-dont-need-it/"
+class="uri">https://statmodeling.stat.columbia.edu/2023/12/19/explainable-ai-works-but-only-when-we-dont-need-it/</a></p>
+<p>Jessica Hullman reports on a NeurIPS talk by Ulrike Luxburg giving “a
+sort of impossibility result for explainable AI,” distinguishing
+cooperative vs. adversarial scenarios for AI explanations and showing
+fundamental limitations of methods like SHAP and LIME.</p>
+<hr />
+</div>
+</div>
+<div id="section-2" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> 2024</h2>
+<div id="progress-in-2023-january-4-2024" class="section level3"
+number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> 19. “Progress in
+2023” (January 4, 2024)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2024/01/04/progress-in-2023/"
+class="uri">https://statmodeling.stat.columbia.edu/2024/01/04/progress-in-2023/</a></p>
+<p>Lists “Artificial intelligence and aesthetic judgment” among Andrew’s
+publications for 2023.</p>
+<p><br/></p>
+</div>
+<div
+id="international-cherry-blossom-prediction-competition-with-ai-february-2024"
+class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> 20. “International
+Cherry Blossom Prediction Competition with AI” (February 2024)</h3>
+<p><a href="https://statmodeling.stat.columbia.edu/tag/ai/"
+class="uri">https://statmodeling.stat.columbia.edu/tag/ai/</a></p>
+<p>“This year, contestants will not only compete against each other for
+the top prizes—but against artificial intelligence. We will include one
+or more submissions from the most popular large language models… Any
+human that beats the AI will receive commemorative memorabilia
+indicating they ‘beat the bot in the 2025 International Cherry Blossom
+Prediction Competition.’”</p>
+<p><br/></p>
+</div>
+<div
+id="broader-impact-statements-in-machine-learning-papers-february-28-2024"
+class="section level3" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> 21. “Broader impact
+statements in machine learning papers” (February 28, 2024)</h3>
+<p><a href="https://statmodeling.stat.columbia.edu/2024/02/28/"
+class="uri">https://statmodeling.stat.columbia.edu/2024/02/28/</a></p>
+<p>Jessica Hullman discusses NeurIPS requirements for broader impact
+statements, noting “Doubts about whether AI/ML researchers are qualified
+to be reflecting on the broader impacts of their work.”</p>
+<p><br/></p>
+</div>
+<div id="re-reading-neuromancer-in-the-age-of-ai-2024"
+class="section level3" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> 22. “Re-reading
+Neuromancer in the age of AI” (2024)</h3>
+<p><a href="https://statmodeling.stat.columbia.edu/tag/ai/"
+class="uri">https://statmodeling.stat.columbia.edu/tag/ai/</a></p>
+<p>Phil revisits Gibson’s 1984 novel: “In Neuromancer we encounter two
+types of artificial intelligence: artificial <em>general</em>
+intelligence, as personified (machinified?) by AI’s known as Wintermute
+and Neuromancer; and ‘constructs’… Just think of the construct as an LLM
+that is trained to respond like a specific real person.”</p>
+<p><br/></p>
+</div>
+<div id="more-red-meat-for-you-ai-skeptics-out-there-may-2024"
+class="section level3" number="5.3.5">
+<h3><span class="header-section-number">5.3.5</span> 23. “More red meat
+for you AI skeptics out there” (May 2024)</h3>
+<p>Continued documentation of AI limitations and hype.</p>
+<p><br/></p>
+</div>
+<div id="forking-paths-in-llms-for-data-analysis-june-24-2024"
+class="section level3" number="5.3.6">
+<h3><span class="header-section-number">5.3.6</span> 24. “Forking paths
+in LLMs for data analysis” (June 24, 2024)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2024/06/24/forking-paths-in-llms-for-data-analysis/"
+class="uri">https://statmodeling.stat.columbia.edu/2024/06/24/forking-paths-in-llms-for-data-analysis/</a></p>
+<p>“LLMs are threatening because they would seem to make this kind of
+approach easier. For example, dealing with data formatting issues
+remains a major time-sink in analysis, especially for users who are not
+programmers, but ChatGPT at least superficially seems tolerant of
+whatever you want to paste in.”</p>
+<p><br/></p>
+</div>
+<div
+id="neurips-2024-workshop-on-statistical-frontiers-in-llms-and-foundation-models-august-9-2024"
+class="section level3" number="5.3.7">
+<h3><span class="header-section-number">5.3.7</span> 25. “NeurIPS 2024
+workshop on Statistical Frontiers in LLMs and Foundation Models” (August
+9, 2024)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2024/08/09/neurips-2024-workshop-on-statistical-frontiers-in-llms-and-foundation-models/"
+class="uri">https://statmodeling.stat.columbia.edu/2024/08/09/neurips-2024-workshop-on-statistical-frontiers-in-llms-and-foundation-models/</a></p>
+<p>Jessica Hullman announces a workshop on “statistical methods
+development for LLMs and foundation models,” covering topics including
+“Watermarking… for identifying AI-generated content,” “Conformal
+prediction and black-box uncertainty quantification,” and “Auditing,
+safety, and risk analysis.”</p>
+<p><br/></p>
+</div>
+<div
+id="new-course-prediction-for-individualized-decision-making-december-6-2024"
+class="section level3" number="5.3.8">
+<h3><span class="header-section-number">5.3.8</span> 26. “New Course:
+Prediction for (Individualized) Decision-making” (December 6, 2024)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2024/12/06/new-course-prediction-for-individualized-decision-making/"
+class="uri">https://statmodeling.stat.columbia.edu/2024/12/06/new-course-prediction-for-individualized-decision-making/</a></p>
+<p>Course syllabus with extensive AI-related readings including papers
+on AI-assisted decision making, AI reliance, and human-AI hybrid
+systems.</p>
+<hr />
+</div>
+</div>
+<div id="section-3" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> 2025</h2>
+<div
+id="large-language-models-llms-flunk-the-word-game-connections-january-2025"
+class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> 27. “Large Language
+Models (LLMs) Flunk the Word Game Connections” (January 2025)</h3>
+<p><a href="https://statmodeling.stat.columbia.edu/"
+class="uri">https://statmodeling.stat.columbia.edu/</a></p>
+<p>Gary Smith’s experiments showing “LLMs are undeniably astonishingly
+good at using the text they trained on (aided by human fine tuners) to
+generate convincing prose. But they are really bad at distinguishing
+between truth and falsehoods and responding to prompts that are unlike
+or even slightly different from what they trained on.”</p>
+<p><br/></p>
+</div>
+<div id="progress-in-2024-aki-january-7-2025" class="section level3"
+number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> 28. “Progress in
+2024 (Aki)” (January 7, 2025)</h3>
+<p><a
+href="https://statmodeling.stat.columbia.edu/2025/01/07/progress-in-2024-aki/"
+class="uri">https://statmodeling.stat.columbia.edu/2025/01/07/progress-in-2024-aki/</a></p>
+<p>Aki Vehtari’s annual progress report, including discussion of AI
+tools for coding efficiency.</p>
+<hr />
+</div>
+</div>
+</div>
+<div id="key-recurring-themes-across-posts" class="section level1"
+number="6">
+<h1><span class="header-section-number">6</span> Key Recurring Themes
+Across Posts</h1>
+<ol style="list-style-type: decimal">
+<li><p><strong>AI Hype vs. Reality</strong>: Gelman and collaborators
+consistently document the gap between AI marketing claims and actual
+capabilities, particularly Gary Smith’s critiques</p></li>
+<li><p><strong>LLM Limitations</strong>: Multiple posts explore what
+ChatGPT/GPT-4 can and cannot do (arithmetic, reasoning, understanding
+vs. pattern matching)</p></li>
+<li><p><strong>Statistics-ML Translation</strong>: Several posts explore
+how statistical concepts translate (or don’t) to machine learning
+terminology</p></li>
+<li><p><strong>Explainable AI Skepticism</strong>: Jessica Hullman’s
+posts express skepticism about XAI methods and their practical
+utility</p></li>
+<li><p><strong>AI in Scientific Practice</strong>: Concerns about
+AI-generated papers, research fraud detection, and AI’s role in data
+analysis</p></li>
+<li><p><strong>Philosophical Questions</strong>: Posts exploring whether
+LLMs “understand” anything, consciousness, and the distinction between
+AI and AGI</p></li>
+</ol>
+<hr />
+</div>
+<div id="sources" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Sources</h1>
+<div id="terry-speed-sources" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Terry Speed
+Sources</h2>
+<ul>
+<li>WEHI Researcher Profile: <a
+href="https://www.wehi.edu.au/researcher/terry-speed/"
+class="uri">https://www.wehi.edu.au/researcher/terry-speed/</a></li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Terry_Speed"
+class="uri">https://en.wikipedia.org/wiki/Terry_Speed</a></li>
+<li>IMS Teaching Statistics article: <a
+href="https://imstat.org/2017/10/02/teaching-statistics-in-the-age-of-data-science/"
+class="uri">https://imstat.org/2017/10/02/teaching-statistics-in-the-age-of-data-science/</a></li>
+<li>AMSTAT Interview 2016: <a
+href="https://magazine.amstat.org/blog/2016/09/01/terryspeedinterview/"
+class="uri">https://magazine.amstat.org/blog/2016/09/01/terryspeedinterview/</a></li>
+<li>WEHI AI article 2023: <a
+href="https://www.wehi.edu.au/news/leaping-into-the-digital-future-ai-at-wehi/"
+class="uri">https://www.wehi.edu.au/news/leaping-into-the-digital-future-ai-at-wehi/</a></li>
+</ul>
+</div>
+<div id="andrew-gelmans-blog" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Andrew Gelman’s
+Blog:</h2>
+<ul>
+<li>Main site: <a href="https://statmodeling.stat.columbia.edu/"
+class="uri">https://statmodeling.stat.columbia.edu/</a></li>
+<li>AI tag: <a href="https://statmodeling.stat.columbia.edu/tag/ai/"
+class="uri">https://statmodeling.stat.columbia.edu/tag/ai/</a></li>
+<li>ChatGPT tag: <a
+href="https://statmodeling.stat.columbia.edu/tag/chatgpt/"
+class="uri">https://statmodeling.stat.columbia.edu/tag/chatgpt/</a></li>
+<li>LLM tag: <a href="https://statmodeling.stat.columbia.edu/tag/llm/"
+class="uri">https://statmodeling.stat.columbia.edu/tag/llm/</a></li>
+</ul>
+<!--
+
+<br/>
+
+ References 
+
+<div id="refs"></div>
+
+-->
+<p><br/></p>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p> Believe you me, without a trace of presumption, I can
+vouch that there are countless opportunities for a small dose of
+statistical judgement to alleviate ills that may be afflicting an
+analysis and report. Yet, here I yam.<a href="#fnref1"
+class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQUkgaW4gU3RBdElzdGljcyIKZGF0ZTogImByIGZvcm1hdChTeXMudGltZSgpLCAnJUIgJWQsICVZJylgIgojYmlibGlvZ3JhcGh5OiBbUmVmcy9fQ2xpblZhbC5iaWIsIFJlZnMvR1JBSUxfTGl1XzIwMjAvX0dSQUlMX0xpdV8yMDIwLmJpYiwKIyAgICAgICAgICAgICAgIFJlZnMvTGl1XzIwMjUvX0xpdV8yMDI1LmJpYl0KY3NsOiAuLi9fY3NsL2NlbGwtbnVtZXJpYy5jc2wKbGluay1jaXRhdGlvbnM6IHRydWUKYWx3YXlzX2FsbG93X2h0bWw6IHllcwpvdXRwdXQ6CiAgI2h0bWxfZG9jdW1lbnQ6CiAgIyBmb3IgdXNlIG9mIC50YWJzZXQKICBybWFya2Rvd246Omh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2ZvbGRpbmc6IGhpZGUKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKICAgIHRvYzogdHJ1ZQogICAgdG9jX2RlcHRoOiAyCiAgICAjIGRvZXMgdGhpcyBoYXZlIGFuIGVmZmVjdAogICAgZmlnX2NhcHRpb246IHllcwogICAgIyB0aGlzIGhhcyBubyBlZmZlY3QKICAgIG51bWJlcl9zZWN0aW9uczogeWVzCiAgICAjIGNzczogWycuLi9fY3NzL3BhbmRvYzMuY3NzJywgJy4uL19jc3MvbXlNYXJnaW5zLmNzcyddCi0tLQoKPCEtLSAKCjxwIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiB5ZWxsb3c7IHBhZGRpbmc6IDVweDsiPgogIDxzcGFuIHN0eWxlPSJmb250LXdlaWdodDogYm9sZDsiPuKaoO+4jyBXb3JrIGluIFByb2dyZXNzOjwvc3Bhbj4gVGhpcyBjb250ZW50IGlzIGluY29tcGxldGUuCjwvcD4KCi0tPgoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9IE5BLAogICAgICAgICAgICAgICAgICAgICAgd2FybmluZyA9IEZBTFNFLAogICAgICAgICAgICAgICAgICAgICAgZXJyb3IgPSBGQUxTRSwKICAgICAgICAgICAgICAgICAgICAgIG1lc3NhZ2UgPSBGQUxTRSwKICAgICAgICAgICAgICAgICAgICAgIGNhY2hlID0gRkFMU0UsCiAgICAgICAgICAgICAgICAgICAgICBmaWcud2lkdGggPSA4LAogICAgICAgICAgICAgICAgICAgICAgZmlnLmhlaWdodCA9IDQpCmBgYAoKCmBgYHtyIGluZGV4LUdsb2JhbE9wdGlvbnMsIHJlc3VsdHM9ImhpZGUiLCBpbmNsdWRlPUZBTFNFLCBjYWNoZT1GQUxTRX0KCmtuaXRyOjpvcHRzX2tuaXQkc2V0KHN0b3Bfb25fZXJyb3IgPSAyTCkgI3JlYWxseSBtYWtlIGl0IHN0b3AKb3B0aW9ucyhrbml0ci50YWJsZS5mb3JtYXQgPSAnaHRtbCcpCgpvcHRpb25zKHN0cmluZ3NBc0ZhY3RvcnM9RikKCiAja25pdHI6OmRlcF9hdXRvKCkKCmBgYAo8IS0tICMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyAtLT4KCgpgYGB7ciBpbmRleC1QcmVsaW1zLCAgaW5jbHVkZT1GQUxTRSwgZWNobz1GQUxTRSwgcmVzdWx0cz0naGlkZScsIG1lc3NhZ2U9RkFMU0V9IAoKCkZOIDwtICJpbmRleCIKaWYoc3VtKGdyZXBsKEZOLCBsaXN0LmZpbGVzKCkpKT09MCkgc3RvcCgiQ2hlY2sgRk4iKQoKUFJFRklYIDwtICJpbmRleCIgIy0gcmVwbGFjZSBieSBGTE9XQ0VMTD8/PwoKIHN1cHByZXNzTWVzc2FnZXMocmVxdWlyZShybWFya2Rvd24pKQogc3VwcHJlc3NNZXNzYWdlcyhyZXF1aXJlKGtuaXRyKSkKCiBzdXBwcmVzc1BhY2thZ2VTdGFydHVwTWVzc2FnZXMocmVxdWlyZShtZXRob2RzKSkKIHN1cHByZXNzUGFja2FnZVN0YXJ0dXBNZXNzYWdlcyhyZXF1aXJlKGJvb2tkb3duKSkKCiBzdXBwcmVzc1BhY2thZ2VTdGFydHVwTWVzc2FnZXMocmVxdWlyZShtYWdyaXR0cikpCgogIyBTaG90Y3V0cyBmb3Iga25pdHRpbmcgYW5kIHJlbmRlcmluZyB3aGlsZSBpbiBSIHNlc3Npb24gKEludm9rZSBpbnRlcmFjdGl2ZSBSIGZyb20gUi9TY3JpcHRzIGZvbGRlcikKIGtrIDwtIGZ1bmN0aW9uKG49JycpIGtuaXRyOjprbml0Mmh0bWwocGFzdGUoInQiLCBuLCBzZXA9JycpLCBlbnZpcj1nbG9iYWxlbnYoKSwKICAgICAgIG91dHB1dD1wYXN0ZShGTiwiLmh0bWwiLCBzZXA9JycpKQoKIHJyIDwtIGZ1bmN0aW9uKG49JycpIHJtYXJrZG93bjo6cmVuZGVyKHBhc3RlKCJ0Iiwgbiwgc2VwPScnKSwgZW52aXI9Z2xvYmFsZW52KCksCiAgICAgICBvdXRwdXRfZmlsZT1wYXN0ZShGTiwiLmh0bWwiLCBzZXA9JycpKSAjIywgb3V0cHV0X2Rpcj0nU2NyaXB0cycpCgogYmIgPC0gZnVuY3Rpb24obj0nJykgYnJvd3NlVVJMKHBhc3RlKEZOLCIuaHRtbCIsIHNlcD0nJykpCgogIyBUaGUgdXN1YWwgc2hvcnRjdXRzCiB6eiA8LSBmdW5jdGlvbihuPScnKSBzb3VyY2UocGFzdGUoInQiLCBuLCBzZXA9JycpKQoKYGBgCjwhLS0gIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIC0tPgoKPGJyLz4KCiMgIEludHJvZHVjdGlvbiAKCioqVEJDKioKCgo8YnIvPgogCgojIFRlcnJ5IFNwZWVkIG9uIEFJL0RhdGEgU2NpZW5jZQoKPGJyLz4KCiMjIE9uIERhdGEgU2NpZW5jZSAKCkhpcyBtb3N0IGRpcmVjdCBzdGF0ZW1lbnQgb24gdGhlIEFJL2RhdGEgc2NpZW5jZSBkZWJhdGU6CgpTcGVlZCBjb21tZW50ZWQgb24gdGhlIGRhdGEgc2NpZW5jZSBtb3ZlbWVudCwgYXNraW5nOiAiQXJlIHdlIGRvaW5nIHN1Y2ggYSBiYWQgam9iIHRoYXQgd2UgbmVlZCB0byByZW5hbWUgb3Vyc2VsdmVzIGRhdGEgc2NpZW50aXN0cyB0byBjYXB0dXJlIHRoZSBpbWFnaW5hdGlvbiBvZiBmdXR1cmUgc3R1ZGVudHMsIGNvbGxhYm9yYXRvcnMsIG9yIGNsaWVudHM/IEFyZSB3ZSBzbyBsYWNraW5nIGluIGNvbmZpZGVuY2Ug4oCmIHRoYXQgd2Ugc2hpdmVyIGluIG91ciBzaG9lcyB0aGUgbW9tZW50IGEgcG90ZW50aWFsIHVzdXJwZXIgYXBwZWFycyBvbiB0aGUgc2NlbmU/IE9yLCBoYXMgdGhlcmUgcmVhbGx5IGJlZW4gYSBmdW5kYW1lbnRhbCBzaGlmdCBhcm91bmQgdXMsIHNvIHRoYXQgb3VyIG9sZCBjbHVtc3kgd2F5cyBvZiBhZGFwdGluZyBhbmQgZXZvbHZpbmcgYXJlIG5vIGxvbmdlciBhZGVxdWF0ZT8iCgpIZSBjb250aW51ZWQgd2l0aCBhIGRlZmVuc2Ugb2Ygc3RhdGlzdGljcycgZW5kdXJpbmcgdmFsdWU6ICJJIHRoaW5rIHdlIGhhdmUgYSBncmVhdCB0cmFkaXRpb24gYW5kIGEgZ3JlYXQgZnV0dXJlLCBib3RoIGZhciBsb25nZXIgdGhhbiB0aGUgY29uY2VudHJhdGlvbiBzcGFuIG9mIGZ1bmRpbmcgYWdlbmNpZXMsIHVuaXZlcnNpdHkgZmFjdWx0aWVzLCBhbmQgZm91bmRhdGlvbnMuIOKApiBXZSBtaWdodCBtaXNzIG91dCBvbiB0aGUgbWlsbGlvbnMgYmVpbmcgbGF2aXNoZWQgb24gZGF0YSBzY2llbmNlIHJpZ2h0IG5vdywgYnV0IHRoYXQncyBubyByZWFzb24gZm9yIHVzIHRvIHN0b3AgdHJ5aW5nIHRvIGRvIHRoZSBiZXN0IHdlIGNhbiBhdCB3aGF0IHdlIGRvIGJlc3QsIHNvbWV0aGluZyB0aGF0IGlzIGZhciB3aWRlciBhbmQgZGVlcGVyIHRoYW4gZGF0YSBzY2llbmNlLiIKCjxici8+CgojIyBPbiBNYWNoaW5lIExlYXJuaW5nIGFuZCBTdGF0aXN0aWNzIAoKSW4gYSAyMDA2IGNvbHVtbiBhbmQgMjAxNiBBTVNUQVQgaW50ZXJ2aWV3LCBTcGVlZCBvYnNlcnZlZCB0aGF0IGNvbXB1dGVyIHNjaWVuY2UsIG1hY2hpbmUgbGVhcm5pbmcsIGltYWdlIGFuYWx5c2lzLCBpbmZvcm1hdGlvbiB0aGVvcnkgYW5kIGJpb2luZm9ybWF0aWNzIGhhdmUgYWxsIHByb3ZpZGVkIGZ1dHVyZSBzdGF0aXN0aWNpYW5zIHRvIHN0YXRpc3RpY3MgZGVwYXJ0bWVudHMgYXJvdW5kIHRoZSB3b3JsZCBpbiByZWNlbnQgeWVhcnMsIGFuZCB0aGF0ICJ0aGVyZSBhcmUgbWlzdW5kZXJzdGFuZGluZ3Mgb24gYm90aCBzaWRlcyBhYm91dCB3aGF0IHN0YXRpc3RpY3MgYW5kIHN0YXRpc3RpY2lhbnMgY2FuIGFuZCBzaG91bGQgZG8uIiBIZSBjaGFyYWN0ZXJpemVkIHRoZSBkYXRhIHNjaWVuY2UgbW92ZW1lbnQgYXMgImEgbmVjZXNzYXJ5IGNvcnJlY3Rpb24gZm9yIG91ciBjb21tdW5pdHkiIHdoaWxlIGFja25vd2xlZGdpbmcgdGhhdCAidGhlcmUgaXMgbm8gZG91YnQgaW4gbXkgbWluZCB0aGF0IHRoZXJlIGFyZSByZWFsIGFuZCBpbXBvcnRhbnQgaXNzdWVzIGhlcmUsIG1peGVkIGluIHdpdGggdGhlIHVzdWFsIGh1bWFuIGNoYXJhY3RlcmlzdGljcyBvZiBleGFnZ2VyYXRpb24gKGh5cGUpLCBvdmVyc2ltcGxpZnlpbmcsIGNvbXBldGl0aW9uIGZvciByZXNvdXJjZXMgKHR1cmYgYmF0dGxlcyksIGFuZCBzbyBvbi4iCgo8YnIvPgoKIyMgQ3VycmVudCBBSSBSZXNlYXJjaCAKCk1vcmUgcmVjZW50bHksIFNwZWVkIGhhcyBiZWVuIHBhcnQgb2YgYSB0ZWFtIGF0IFdFSEkgdGhhdCBkZXZlbG9wZWQgQUktYmFzZWQgbWV0aG9kb2xvZ3kgdG8gcmVtb3ZlIHVud2FudGVkIHZhcmlhdGlvbiBmcm9tIGJpb21lZGljYWwgZGF0YSwgc2hvd2luZyBoaXMgcHJhY3RpY2FsIGVuZ2FnZW1lbnQgd2l0aCBtYWNoaW5lIGxlYXJuaW5nIG1ldGhvZHMgaW4gaGlzIGdlbm9taWNzIHdvcmsuCgpTcGVlZCdzIHBlcnNwZWN0aXZlIGFwcGVhcnMgdG8gYmUgdGhhdCBvZiBhIHByYWdtYXRpYyBzdGF0aXN0aWNpYW4gd2hvIHZhbHVlcyB3aGF0IHdvcmtzIG92ZXIgaWRlb2xvZ2ljYWwgZGViYXRlcyBhYm91dCBtZXRob2RvbG9neSwgd2hpbGUgZGVmZW5kaW5nIHN0YXRpc3RpY3MgYXMgYSBkaXNjaXBsaW5lIHdpdGggZGVlcGVyIGZvdW5kYXRpb25zIHRoYW4gYW55IHNpbmdsZSB0ZWNobm9sb2dpY2FsIHdhdmUuCgotLS0KCiMjIEFkZGl0aW9uYWwgRmluZGluZ3Mgb24gVGVycnkgU3BlZWQgCgojIyMgQmFja2dyb3VuZCB7LX0KClRlcnJ5IFNwZWVkIChib3JuIDE5NDMpIGlzIGFuIEF1c3RyYWxpYW4gc3RhdGlzdGljaWFuIGtub3duIGZvcjogCgotIFByb2Zlc3NvciBhdCBVQyBCZXJrZWxleSAoU3RhdGlzdGljcykgYW5kIFdFSEkgKEJpb2luZm9ybWF0aWNzKQotIEV4cGVydCBvbiBtaWNyb2FycmF5IGFuYWx5c2lzIGFuZCBzdGF0aXN0aWNhbCBnZW5ldGljcwotIDIwMTMgUHJpbWUgTWluaXN0ZXIncyBQcml6ZSBmb3IgU2NpZW5jZSB3aW5uZXIKLSBMb25nLXJ1bm5pbmcgSU1TIEJ1bGxldGluIGNvbHVtbiAiVGVyZW5jZSdzIFN0dWZmIiAobm93IGRpc2NvbnRpbnVlZCkKCjxici8+CgojIyMgT24gIlByaW5jaXBsZWQiIE1ldGhvZHMgIHstfQoKKiAyMDE2IElNUyBCdWxsZXRpbiBjb2x1bW4gIAoKU3BlZWQgb2JqZWN0ZWQgdG8gZGVzY3JpYmluZyBzdGF0aXN0aWNhbCBtZXRob2RzIGFzICJwcmluY2lwbGVkLCIgYXJndWluZzogIklmIGEgc3RhdGlzdGljYWwgYW5hbHlzaXMgaXMgY2xlYXJseSBzaG93biB0byBiZSBlZmZlY3RpdmUg4oCmIGl0IGdhaW5zIG5vdGhpbmcgZnJvbSBiZWluZyDigKYgcHJpbmNpcGxlZC4iIEhlIGNyaXRpY2l6ZWQgdGhlIGltcGxpY2F0aW9uIHRoYXQgb3RoZXIgYXBwcm9hY2hlcyBhcmUgInVucHJpbmNpcGxlZC4iCgo8YnIvPgoKIyMjIE9uIFN0YXRpc3RpY2lhbiBQZXJjZXB0aW9ucyB7LX0KCiogMjAxNCBJTVMgY29sdW1uIGNpdGVkIGJ5IEJpbiBZdQoKU3BlZWQgcXVvdGVkIGFuIG91dHNpZGVyIHZpZXcgdGhhdCBzdGF0aXN0aWNpYW5zICJkb24ndCBkZWFsIHdpdGggcmlzaywgd2l0aCB1bmNlcnRhaW50eeKApiB3ZSdyZSB0b28gYWJzb2x1dGUsIHdlIGRvIHAtdmFsdWVzLCBjb25maWRlbmNlIGludGVydmFscywgZGVmaW5pdGUgdGhpbmdzIGxpa2UgdGhhdC4iIFNjaWVudGlzdHMgd2FudGVkICJhY3Rpb25hYmxlIGluc2lnaHQiIG5vdCAiYXJjYW5lIGNvbmNlcm5zIGFib3V0IG1hdGhlbWF0aWNhbCBtZXRob2RzLiIKCjxici8+CgojIyMgMjAyMyBXRUhJIEFJIFdvcmsgey19CgpTcGVlZCdzIHRlYW0gKHdpdGggUGFwZW5mdXNzLCBNb2xhbmlhKSBkZXZlbG9wZWQgQUktYmFzZWQgbWV0aG9kb2xvZ3kgdG8gcmVtb3ZlIHVud2FudGVkIHZhcmlhdGlvbiBmcm9tIGJpb21lZGljYWwgZGF0YSwgcHVibGlzaGVkIGluIE5hdHVyZSBCaW90ZWNobm9sb2d5LiBBcHBsaWVkIHRvIENhbmNlciBHZW5vbWUgQXRsYXMgKDEwLDAwMCBwYXRpZW50IHNhbXBsZXMsIDMzIGNhbmNlciB0eXBlcykuCgo8YnIvPgoKIyMgU3VtbWFyeSBDaGFyYWN0ZXJpemF0aW9uCgpTcGVlZCdzIHN0YW5jZTogcHJhZ21hdGljIGRlZmVuZGVyIG9mIHN0YXRpc3RpY3MgYXMgZGlzY2lwbGluZSB3aGlsZSBhY2tub3dsZWRnaW5nIGxlZ2l0aW1hdGUgY3JpdGlxdWVzLiBWYWx1ZXMgd2hhdCB3b3JrcyBvdmVyIGlkZW9sb2dpY2FsIHB1cml0eS4gU2tlcHRpY2FsIG9mIGh5cGUgYW5kIHJlYnJhbmRpbmcgYnV0IGVuZ2FnZWQgd2l0aCBNTCBtZXRob2RzIGluIHByYWN0aWNlLiBTZWVzIHN0YXRpc3RpY3MgYXMgaGF2aW5nICJ3aWRlciBhbmQgZGVlcGVyIiBmb3VuZGF0aW9ucyB0aGFuIGRhdGEgc2NpZW5jZSB0cmVuZHMuCgotLS0KCiMgTWljaGFlbCBKb3JkYW4ncyBGYXJld2VsbCBUb3VyIAoKSSB0aG91Z2h0IHRoZSBNaWNoYWVsIEpvcmRhbiB3YXMgdGhlIGJlc3QgcGVyc29uIHRvIGNoYW1waW9uIHNhbml0eQphbmQgcmVhc29uIGluIHRoaXMgcGVyaW9kIG9mIHVuY29uc3RyYWluZWQgaHlwZSBhbmQgYXdlLgpIZXJlIGFyZSBhIGZldyBsaW5rcyAtIHRoZXJlIGFyZSBtYW55IG1vcmUgYnV0IHRoZXNlIGNhbWUgYXQgdGhlCnRvcCBvZiBzZWFyY2ggcmVzdWx0cyBhbmQgSSB0aGluayBhcmUgcmVwcmVzZW50YXRpdmUgb2YgaG93ICBoZSB0aGlua3MgYW5kIHNwZWFrczoKCiogTUogYWRkcmVzc2VzIHRoZSBVQyByZWdlbnRzIGluIDIwMjMgLSBodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUF5Z0pVYndDd0pjCgo8cD48cC8+CiogQSBjb3VwbGUgb2YgdHlwaWNhbCB0YWxrczoKICAgLSBodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUthRllhRnF1RkxzCiAgIC0gaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj0zemxESGR0U1h0NAoKPHA+PHAvPgoqIEhlcmUgaXMgd2hlcmUgaGUgZXhwbGFpbnMgd2h5IGhlIG5vdyBsaXZlcyBhbmQgd29ya3MgaW4gRXVyb3BlIC0gaHR0cHM6Ly95b3V0dS5iZS9aSkdIaHM2Zk5rWT9zaT10ajhWcG02S2Q1Uy01UGJDCgpTbyBpdCBhcHBlYXJzIHRoYXQgYWZ0ZXIgc2V2ZXJhbCB5ZWFycyBvZiBwdXNoaW5nIGJhY2sgb24gdGhlIApTaWxpY29uIFZhbGxleSBtaW5kc2V0IHJlZ2FyZGluZyBBSSwgTUogZGVjaWRlZCB0byBwYWNrIHVwIGFuZApnbyB3b3JrIHdpdGggcGVvcGxlIHdpdGggYSBtb3JlIHNpbWlsYXIgbWluZHNldC4KU28gbXkgY2hhbXBpb24gc2FpZCAqKkYtaXQqKiB0byB0aGUgcHJldmFpbGluZyBtaW5kc2V0IGFuZCBsZWZ0LgpUaGF0IGRvZXNuJ3QgZmFyZSB0b28gd2VsbCwgZm9yIG1lIGFuZCBvdGhlciBqb3VybmV5bWFuIHN0YXRpc3RpY2lhbnMsCndobyBqdXN0IHdhbnQgdG8gcHJvdmlkZSBndWlkYW5jZSBvbiBob3cgYmVzdCB0byBjb2xsZWN0LCBhbmFseXplIGFuZCBpbnRlcnByZXQKZGF0YSAgaW4gdGhlIGZhY2Ugb2YgdmFyaWFiaWxpdHkuXlsKQmVsaWV2ZSB5b3UgbWUsIHdpdGhvdXQgYSB0cmFjZSBvZiBwcmVzdW1wdGlvbiwgSSBjYW4gdm91Y2ggdGhhdCB0aGVyZSBhcmUgCmNvdW50bGVzcyBvcHBvcnR1bml0aWVzIGZvciBhIHNtYWxsIGRvc2Ugb2Ygc3RhdGlzdGljYWwganVkZ2VtZW50IHRvCmFsbGV2aWF0ZSBpbGxzIHRoYXQgbWF5IGJlIGFmZmxpY3RpbmcgYW4gYW5hbHlzaXMgYW5kIHJlcG9ydC4KWWV0LCBoZXJlIEkgeWFtLl0KCjxici8+CgotLS0KCiMgTWljaGFlbCBKb3JkYW4gbWVudGlvbnMgb24gQW5kcmV3IEdlbG1hbidzIGJsb2cKCiMjIDEuICJObywgTWljaGFlbCBKb3JkYW4gZGlkbid0IHNheSB0aGF0ISIgKE9jdG9iZXIgMjMsIDIwMTQpIHstfQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDE0LzEwLzIzL21pY2hhZWwtam9yZGFuLWRpZG50LXNheS8KClRoaXMgcG9zdCBkaXNjdXNzZXMgYSBjb250cm92ZXJzeSBvdmVyIGFuIElFRUUgU3BlY3RydW0gaW50ZXJ2aWV3IHdpdGggSm9yZGFuIGFib3V0IEFJIGFuZCBiaWcgZGF0YS4gQm9iIENhcnBlbnRlciBub3RlcyB0aGF0IEpvcmRhbiBjbGFpbWVkIGl0IHdhcyAicGF0ZW50bHkgZmFsc2UiIHRvIHRoaW5rIHRoZXJlIGlzIGFueSBuZXVyb3NjaWVuY2UgYmVoaW5kIGN1cnJlbnQgRGVlcCBMZWFybmluZyBhbmQgbWFjaGluZSBsZWFybmluZyB0ZWNobmlxdWVzLCBhbmQgdGhhdCB3ZSBhcmUgIm5vdCB5ZXQgaW4gYW4gZXJhIiB3aGVyZSB3ZSBjYW4gdXNlIGJyYWluIHVuZGVyc3RhbmRpbmcgdG8gY3JlYXRlIGludGVsbGlnZW50IGNvbXB1dGVyIHN5c3RlbXMuIFRoZSBwb3N0IGluY2x1ZGVzIGEgbGl2ZWx5IGRlYmF0ZSBpbiBjb21tZW50cyBiZXR3ZWVuIHRoZSBqb3VybmFsaXN0IExlZSBHb21lcyBhbmQgcmVhZGVycyBhYm91dCB0aGUgYWNjdXJhY3kgb2YgdGhlIGludGVydmlldyBmcmFtaW5nLgoKPGJyLz4KCiMjIDIuICJUaGUgTUwgdW5jZXJ0YWludHkgcmV2b2x1dGlvbiBpcyDigKYgbm93PyIgKEF1Z3VzdCA1LCAyMDIxKXstfQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDIxLzA4LzA1L3RoZS1tbC11bmNlcnRhaW50eS1yZXZvbHV0aW9uLWlzLW5vdy8KCkF0IGEgd29ya3Nob3Agb24gZGlzdHJpYnV0aW9uLWZyZWUgdW5jZXJ0YWludHkgcXVhbnRpZmljYXRpb24sIE1pY2hhZWwgSm9yZGFuIG9mIEJlcmtlbGV5IGFsbHVkZWQgdG8gaG93IHVuY2VydGFpbnR5IHF1YW50aWZpY2F0aW9uIGhhcyBsb25nIGJlZW4gYSBuaWNoZSB0b3BpYyBpbiBNTCwgYW5kIHN0aWxsIGtpbmQgb2YgaXMsIGJ1dCB0aGlzIG1pZ2h0IGJlIHNoaWZ0aW5nLgoKPGJyLz4KCiMjIDMuICJTdGF0aWMgc2Vuc2l0aXZpdHkgYW5hbHlzaXMiIChNYXkgMjksIDIwMTcpIHstfQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDE3LzA1LzI5L3N0YXRpYy1zZW5zaXRpdml0eS1hbmFseXNpcy8KCkdlbG1hbiB3cml0ZXM6ICJBZnRlciB0aGlzIGRpc2N1c3Npb24sIEkgcG9pbnRlZCBSeWFuIEdpb3JkYW5vLCBUYW1hcmEgQnJvZGVyaWNrLCBhbmQgTWljaGFlbCBKb3JkYW4gdG8gRmlndXJlIDQgb2YgdGhpcyBwYXBlciB3aXRoIEJvaXMgYW5kIEppYW5nIGFzIGFuIGV4YW1wbGUgb2YgJ3N0YXRpYyBzZW5zaXRpdml0eSBhbmFseXNpcy4nIiBUaGUgcGFwZXIgY2l0ZWQgaXMgR2lvcmRhbm8sIEJyb2RlcmljaywgYW5kIEpvcmRhbiAoMjAxOCkgb24gc2Vuc2l0aXZpdHkgYW5hbHlzaXMuCgo8YnIvPgoKIyMgNC4gIldoYXQgYXJlIHRoZSBtb3N0IGltcG9ydGFudCBzdGF0aXN0aWNhbCBpZGVhcyBvZiB0aGUgcGFzdCA1MCB5ZWFycz8iIChEZWNlbWJlciA5LCAyMDIwKSB7LX0KaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvMjAyMC8xMi8wOS93aGF0LWFyZS10aGUtbW9zdC1pbXBvcnRhbnQtc3RhdGlzdGljYWwtaWRlYXMtb2YtdGhlLXBhc3QtNTAteWVhcnMvCgpCb2IgQ2FycGVudGVyIGNvbW1lbnRzOiAiWW91IGhhdmUgcGVvcGxlIGxpa2UgTWljaGFlbCBKb3JkYW4gd2hvIHN0cmFkZGxlIHRoZSBmaWVsZHMgYW5kIHByb2R1Y2Ugc3R1ZGVudHMgc3RyYWRkbGluZyB0aGUgZmllbGRzIGxpa2UgRGF2ZSBCbGVpLCBUYW1hcmEgQnJvZGVyaWNrLCBhbmQgRnJhbmNpcyBCYWNoLiBXaGF0J3MgZnVubnkgaXMgdGhhdCBJIHZpdmlkbHkgcmVtZW1iZXIgdGFsa3MgYnkgSm9yZGFuIGFuZCBIaW50b24gaW4gcHN5Y2hvbG9neSAoQ01VIHBzeWNoIHdhcyBiaWcgaW50byAnY29ubmVjdGlvbmlzbScpIGluIHRoZSAxOTgwcyBhbmQgZWFybHkgOTBzIG9uIG5ldXJhbCBuZXRzIHRoYXQgZXZlcnlvbmUgaW4gQ1MganVzdCB5YXduZWQgdGhyb3VnaC4iCgo8YnIvPgoKIyMgNS4gIlN0YW4gRG93biBVbmRlciIgKEZlYnJ1YXJ5IDE1LCAyMDE1KSB7LX0KaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvMjAxNS8wMi8xNS9zdGFuLTMvCgpCb2IgQ2FycGVudGVyIG1lbnRpb25zIEdvb2dsZSBzZWFyY2ggZGl2ZXJzaXR5LCBub3Rpbmc6ICJ5b3UgZG9uJ3QgZ2V0IDEwMDAgaGl0cyBmb3IgTWljaGFlbCBKb3JkYW4gdGhlIGJhc2tldGJhbGwgcGxheWVyIGJlZm9yZSB0aGUgZmlyc3QgaGl0IGZvciBNaWNoYWVsIEpvcmRhbiB0aGUgY29tcHV0ZXIgc2NpZW50aXN0IChvciBtYXliZSB2aWNlLXZlcnNhIHRoZXNlIGRheXM/KS4iCgo8YnIvPgoKIyMgNi4gIkVpZCBtYSBjbGFjayBzaGF3IHp1cG92ZW4gZGVsIGJhIiAoRmVicnVhcnkgNywgMjAxOCkgey19Cmh0dHBzOi8vc3RhdG1vZGVsaW5nLnN0YXQuY29sdW1iaWEuZWR1LzIwMTgvMDIvMDcvZWlkLW1hLWNsYWNrLXNoYXctenVwb3Zlbi1kZWwtYmEvCgpPbiB2YXJpYXRpb25hbCBpbmZlcmVuY2UgZGlhZ25vc3RpY3MsIG1lbnRpb25zICJjbGV2ZXIgc2Vjb25kLW9yZGVyIGNvcnJlY3Rpb25zIChsaWtlIHRoZSBvbmUgcHJvcG9zZWQgYnkgUnlhbiBHaW9yZGFubywgVGFtYXJhIEJyb2RlcmljaywgYW5kIE1pY2hhZWwgSm9yZGFuKSIgZm9yIGltcHJvdmluZyB2YXJpYXRpb25hbCBwb3N0ZXJpb3JzLgoKLS0tCgoKIyBBSS1yZWxhdGVkIHBvc3RzIG9uIEFHJ3MgU3RhdGlzdGljYWwgTW9kZWxpbmcgYmxvZyAoMjAyMi0yMDI1KQoKCjxici8+CgojIyAyMDIyCgojIyMgMS4gIkNoYXRib3RzOiBTdGlsbCBEdW1iIEFmdGVyIEFsbCBUaGVzZSBZZWFycyIgKEphbnVhcnkgMjAyMikgey19Cmh0dHBzOi8vc3RhdG1vZGVsaW5nLnN0YXQuY29sdW1iaWEuZWR1LzIwMjIvMDEvCkRpc2N1c3Npb24gb2YgY2hhdGJvdCBsaW1pdGF0aW9ucyBiZWZvcmUgdGhlIENoYXRHUFQgZXJhLgoKPGJyLz4KCiMjIyAyLiAiQSBjaGF0Ym90IGNoYWxsZW5nZSBmb3IgQmxhaXNlIEFnw7xlcmEgeSBBcmNhcyBhbmQgR2FyeSBTbWl0aCIgKEphbnVhcnkgMjAyMikgey19CkVhcmx5IGRpc2N1c3Npb24gY2hhbGxlbmdpbmcgY2xhaW1zIGFib3V0IGNoYXRib3QgY2FwYWJpbGl0aWVzLgoKPGJyLz4KCiMjIyAzLiAiV2UgaGF2ZSByZWFsbHkgZXZlcnl0aGluZyBpbiBjb21tb24gd2l0aCBtYWNoaW5lIGxlYXJuaW5nIG5vd2FkYXlzLCBleGNlcHQsIG9mIGNvdXJzZSwgbGFuZ3VhZ2UiIChNYXkgMTMsIDIwMjIpIHstfQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDIyLzA1LzEzL3dlLWhhdmUtcmVhbGx5LWV2ZXJ5dGhpbmctaW4tY29tbW9uLXdpdGgtbWFjaGluZS1sZWFybmluZy1ub3dhZGF5cy1leGNlcHQtb2YtY291cnNlLWxhbmd1YWdlLwoKQm9iIENhcnBlbnRlciBoYWQgYW4gaW50ZXJlc3RpbmcgZXhjaGFuZ2Ugd2l0aCBBbmRyZXcgcmVnYXJkaW5nIHRoZSBkaWZmZXJlbmNlcyBiZXR3ZWVuIHN0YXRpc3RpY3MgYW5kIG1hY2hpbmUgbGVhcm5pbmcsIG5vdGluZyB0aGF0ICJ0aGUgdHdvIHN1YmZpZWxkcyBhbHNvIGhhdmUgZGlmZmVyZW50IHByaW9yaXRpZXMgYW5kIGNvbmNlcHRzIiBiZXlvbmQganVzdCBqYXJnb24gZGlmZmVyZW5jZXMuCgo8YnIvPgoKIyMjIDQuICJGcm9tIGNoYXRib3RzIGFuZCB1bmRlcnN0YW5kaW5nIHRvIGFwcGxpYW5jZSByZXBhaXIgYW5kIHN0YXRpc3RpY2FsIHByYWN0aWNlIiAoQXVndXN0IDIwMjIpIHstfQpFeHBsb3JpbmcgdGhlIGdhcCBiZXR3ZWVuIEFJIGNsYWltcyBhbmQgcHJhY3RpY2FsIGNhcGFiaWxpdGllcy4KCjxici8+CgojIyMgNS4gIk5ldXJJUFMgRXRoaWNzIENvZGUgb2YgQ29uZHVjdCIgKE1heSAyMDIyKSB7LX0KRGlzY3Vzc2lvbiBvZiB0aGUgTmV1cklQUyBkb2N1bWVudCAiZGV0YWlsaW5nIGEgY29kZSBvZiBldGhpY3MsIGVzc2VudGlhbGx5IGxpc3RpbmcgY29uY2VybnMgY29uc2lkZXJlZCBmYWlyIGdhbWUgZm9yIGNyaXRpcXVpbmcgKHBvc3NpYmx5IGV2ZW4gcmVqZWN0aW5nKSBzdWJtaXR0ZWQgcGFwZXJzIiBpbiBtYWNoaW5lIGxlYXJuaW5nLgoKPGJyLz4KCiMjIyA2LiAiVGhlIHdvcnN0IG9mIGJvdGggd29ybGRzOiBBIGNvbXBhcmF0aXZlIGFuYWx5c2lzIG9mIGVycm9ycyBpbiBsZWFybmluZyBmcm9tIGRhdGEgaW4gcHN5Y2hvbG9neSBhbmQgbWFjaGluZSBsZWFybmluZyIgKDIwMjIpIHstfQpQdWJsaXNoZWQgcGFwZXIgYnkgSmVzc2ljYSBIdWxsbWFuLCBTYXlhc2ggS2Fwb29yLCBBbmRyZXcgR2VsbWFuLCBhbmQgb3RoZXJzIGNvbXBhcmluZyBtZXRob2RvbG9naWNhbCBwcm9ibGVtcyBpbiBwc3ljaG9sb2d5IGFuZCBNTC4KCjxici8+CgojIyMgNy4gQm9iIENhcnBlbnRlciBvbiB0aGUgdGVybSAibGVhcm5pbmciIChKdWx5IDIwLCAyMDIyKSB7LX0KaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvdGFnL2FpLwoKIklmIEkgd2VyZSB0aGUgbGV4aWNhbCBwb2xpY2UsIEkgd291bGQndmUgYmxhY2tsaXN0ZWQgdGhlIHRlcm0gJ2xlYXJuaW5nLCcgYmVjYXVzZSB3ZSdyZSByZWFsbHkganVzdCBlc3RpbWF0aW5nIHBhcmFtZXRlcnMgKGFrYSAnd2VpZ2h0cycpIG9mIGEgc3RhdGlzdGljYWwgbW9kZWwuIEkgZmVsdCBiYWQgc2F5aW5nICdsZWFybmluZycgZXZlbiBiYWNrIHdoZW4gSSB3b3JrZWQgaW4gTUwgZnVsbCB0aW1lLCBidXQgdGhhdCdzIHByb2JhYmx5IGp1c3QgYmVjYXVzZSBJIGxpdmVkIHRocm91Z2ggdGhlIEFJIHdpbnRlciBkdXJpbmcgd2hpY2ggdGhlIHF1aWNrZXN0IHJvdXRlIHRvIHJlamVjdGlvbiBvZiBhIHBhcGVyIG9yIGdyYW50IHdhcyB0byBtZW50aW9uICdhcnRpZmljaWFsIGludGVsbGlnZW5jZS4nIgoKLS0tCgojIyAyMDIzCgojIyMgOC4gIkJheWVzaWFuIHN0YXRpc3RpY3MgYW5kIG1hY2hpbmUgbGVhcm5pbmc6IEhvdyBkbyB0aGV5IGRpZmZlcj8iIChKYW51YXJ5IDE0LCAyMDIzKSB7LX0KaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvMjAyMy8wMS8xNC9iYXllc2lhbi1zdGF0aXN0aWNzLWFuZC1tYWNoaW5lLWxlYXJuaW5nLWhvdy1kby10aGV5LWRpZmZlci8KCkdlbG1hbiB3cml0ZXM6ICJJIGFzc29jaWF0ZSBtYWNoaW5lIGxlYXJuaW5nIHdpdGggYmlnIG1vZGVscyBmaXQgdG8gYmlnIGRhdGEgYW5kIG1pbmltYWwgYXNzdW1wdGlvbnM6IGluc3RlYWQgb2YgYXNzaWduaW5nIGEgc3RydWN0dXJlIHRvIGEgbW9kZWwgb3IgdXNpbmcgc3Ryb25nIHByaW9ycywgeW91IGp1c3QgdXNlIHRvbnMgb2YgdHJhaW5pbmcgZGF0YS4uLiBJbiBjb250cmFzdCwgSSBhc3NvY2lhdGUgQmF5ZXNpYW4gaW5mZXJlbmNlIHdpdGggc3Ryb25nIHN0cnVjdHVyZXMgYW5kIHN0cm9uZyBwcmlvcnMuIFRoYXQgaXMsIHRoZSBtb2RlbCBpcyBkb2luZyBhIGxvdCBvZiB0aGUgd29yay4iCgo8YnIvPgoKIyMjIDkuICJQcmVkaWN0aW5nIExMTSBoYXZvYyIgKE1hcmNoIDE1LCAyMDIzKSB7LX0KaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvMjAyMy8wMy8xNS9wcmVkaWN0aW5nLWxsbS1oYXZvYy8KCkRpc2N1c3Npb24gb2YgTExNIGRlY2VwdGlvbjogIldoYXQgbW9zdCBjYXB0dXJlZCBteSBhdHRlbnRpb24gdGhvdWdoIGlzIGhpcyBhcmd1bWVudCBhYm91dCBwcmVkaWN0YWJsZSBkZWNlcHRpb24sIHdoZXJlIGEgbW9kZWwgZm9vbHMgb3IgbWFuaXB1bGF0ZXMgdGhlIChodW1hbikgc3VwZXJ2aXNvciByYXRoZXIgdGhhbiBkb2luZyB0aGUgZGVzaXJlZCB0YXNrcywgYmVjYXVzZSBkb2luZyBzbyBnZXRzIGl0IGJldHRlciBvciBlcXVhbCByZXdhcmQuIgoKPGJyLz4KCiMjIyAxMC4gIkFJIGFzIFdpbGV5IEUuIENveW90ZSwgYW5kIGEgZnVubnkgdGhpbmcgYWJvdXQgV29yc3RmaXNoIiAoSnVuZSAyMDIzKQpBSSBza2VwdGljaXNtIGFuZCB0aGUgZ2FwIGJldHdlZW4gaHlwZSBhbmQgcmVhbGl0eS4KCjxici8+CgojIyMgMTEuICJTbGlkZXMgb24gbGFyZ2UgbGFuZ3VhZ2UgbW9kZWxzIGZvciBzdGF0aXN0aWNpYW5zIiAoSnVseSAyNiwgMjAyMykKaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvMjAyMy8wNy8yNi9zbGlkZXMtb24tbGFyZ2UtbGFuZ3VhZ2UtbW9kZWxzLWZvci1zdGF0aXN0aWNpYW5zLwoKQm9iIENhcnBlbnRlcidzIHR1dG9yaWFsIG9uIExMTXMgZm9yIHN0YXRpc3RpY2lhbnMsIHdpdGggZGlzY3Vzc2lvbiBvZiBDaGF0R1BUJ3Mgc3RyZW5ndGhzIGluIGNvZGUgZ2VuZXJhdGlvbiBhbmQgd2Vha25lc3NlcyBpbiBtYXRoZW1hdGljcy4KCjxici8+CgojIyMgMTIuICJBcnRpZmljaWFsIGludGVsbGlnZW5jZSBhbmQgYWVzdGhldGljIGp1ZGdtZW50IiAoQXVndXN0IDE2LCAyMDIzKQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDIzLzA4LzE2L2FydGlmaWNpYWwtaW50ZWxsaWdlbmNlLWFuZC1hZXN0aGV0aWMtanVkZ21lbnQvCgpKZXNzaWNhIEh1bGxtYW4sIEFyaSBIb2x0em1hbiwgYW5kIEFuZHJldyBHZWxtYW4gd3JpdGU6ICJHZW5lcmF0aXZlIEFJcyBwcm9kdWNlIGNyZWF0aXZlIG91dHB1dHMgaW4gdGhlIHN0eWxlIG9mIGh1bWFuIGV4cHJlc3Npb24uIFdlIGFyZ3VlIHRoYXQgZW5jb3VudGVycyB3aXRoIHRoZSBvdXRwdXRzIG9mIG1vZGVybiBnZW5lcmF0aXZlIEFJIG1vZGVscyBhcmUgbWVkaWF0ZWQgYnkgdGhlIHNhbWUga2luZHMgb2YgYWVzdGhldGljIGp1ZGdtZW50cyB0aGF0IG9yZ2FuaXplIG91ciBpbnRlcmFjdGlvbnMgd2l0aCBhcnR3b3JrLiIKCjxici8+CgojIyMgMTMuICJSZXBvcnQgb24gdGhlIGxhcmdlIGxhbmd1YWdlIG1vZGVsIG1lZXRpbmcgYXQgQmVya2VsZXkiIChBdWd1c3QgMjAsIDIwMjMpCmh0dHBzOi8vc3RhdG1vZGVsaW5nLnN0YXQuY29sdW1iaWEuZWR1LzIwMjMvMDgvMjAvcmVwb3J0LW9uLXRoZS1sYXJnZS1sYW5ndWFnZS1tb2RlbC1tZWV0aW5nLWF0LWJlcmtlbGV5LwoKQm9iIENhcnBlbnRlcidzIGV4dGVuc2l2ZSByZXBvcnQgb24gdGhlIFNpbW9ucyBJbnN0aXR1dGUgd29ya3Nob3Agb24gTExNcyBhbmQgdHJhbnNmb3JtZXJzLiAiJ0luLWNvbnRleHQgbGVhcm5pbmcnIGlzIHdoYXQgcGVvcGxlIGNhbGwgYW4gTExNJ3MgYWJpbGl0eSB0byBiZSBnaXZlbiB6ZXJvIG9yIG1vcmUgZXhhbXBsZXMgYW5kIHRoZW4gdG8gY29tcGxldGUgdGhlIHBhdHRlcm4uLi4gQ2hhdEdQVCBjYW4gbWFuYWdlIGFsbCBzb3J0cyBvZiBudWFuY2VkIGxhbmd1YWdlIHRhc2tzIGdpdmVuIG9ubHkgYSBmZXcgZXhhbXBsZXMuIgoKPGJyLz4KCiMjIyAxNC4gIkNoYXRHUFQgKDQpIGNhbiBkbyAzLWRpZ2l0IG11bHRpcGxpY2F0aW9uIiAoQXVndXN0IDMwLCAyMDIzKQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDIzLzA4LzMwL2NoYXRncHQtNC1jYW4tZG8tMy1kaWdpdC1tdWx0aXBsaWNhdGlvbi8KClRlc3RpbmcgR1BULTQncyBhcml0aG1ldGljIGNhcGFiaWxpdGllcyBhbmQgZGlzY3Vzc2lvbiBvZiB3aGF0IExMTXMgY2FuIGFuZCBjYW5ub3QgdW5kZXJzdGFuZC4KCjxici8+CgojIyMgMTUuICJCZW5lYXRoIGV2ZXJ5IGFwcGxpY2F0aW9uIG9mIGNhdXNhbCBpbmZlcmVuY2UgdG8gTUwgbGllcyBhIHJpZGljdWxvdXNseSBoYXJkIHNvY2lhbCBzY2llbmNlIHByb2JsZW0iIChPY3RvYmVyIDIsIDIwMjMpCmh0dHBzOi8vc3RhdG1vZGVsaW5nLnN0YXQuY29sdW1iaWEuZWR1LzIwMjMvMTAvMDIvYmVuZWF0aC1ldmVyeS1hcHBsaWNhdGlvbi1vZi1jYXVzYWwtaW5mZXJlbmNlLXRvLW1sLWxpZXMtYS1yaWRpY3Vsb3VzbHktaGFyZC1zb2NpYWwtc2NpZW5jZS1wcm9ibGVtLwoKSmVzc2ljYSBIdWxsbWFuIGRpc2N1c3NlcyBaYWNoIExpcHRvbidzIHRhbGs6ICJ0aGVyZSdzIGJlZW4gY29uc2lkZXJhYmxlIHJlZmxlY3Rpb24gbGF0ZWx5IG9uIG1ldGhvZHMgaW4gbWFjaGluZSBsZWFybmluZywgYXMgaXQgaGFzIGJlY29tZSBwYWluZnVsbHkgb2J2aW91cyB0aGF0IGFjY3VyYWN5IG9uIGhlbGQtb3V0IElJRCBkYXRhIGlzIG9mdGVuIG5vdCBhIGdvb2QgcHJlZGljdG9yIG9mIG1vZGVsIHBlcmZvcm1hbmNlIGluIGEgcmVhbC13b3JsZCBkZXBsb3ltZW50LiIKCjxici8+CgojIyMgMTYuICJGcmljdGlvbmxlc3MgcmVwcm9kdWNpYmlsaXR5OyBtZXRob2RzIGFzIHByb3RvLWFsZ29yaXRobXM7IHN0YXRpc3RpY2lhbnMgd2VsbCBwcmVwYXJlZCB0byB0aGluayBhYm91dCBpc3N1ZXMgcmFpc2VkIGJ5IEFJIiAoT2N0b2JlciAxMywgMjAyMykKaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvMjAyMy8xMC8xMy9mcmljdGlvbmxlc3MtcmVwcm9kdWNpYmlsaXR5LW1ldGhvZHMtYXMtcHJvdG8tYWxnb3JpdGhtcy1kaXZpc2lvbi1vZi1sYWJvci1hcy1hLWNoYXJhY3RlcmlzdGljLW9mLXN0YXRpc3RpY2FsLW1ldGhvZHMtc3RhdGlzdGljcy1hcy10aGUtc2NpZW5jZS1vZi1kZWZhdWx0cy1zdGF0aXN0aWNpYW5zLXdlbGwtcHJlcGFyZWQtdG8tdGhpbmstYWJvLwoKIkNvbXB1dGVyIHNjaWVudGlzdHMgaGF2ZSBkZXZlbG9wZWQgZ2VuZXJhbCB0b29scyAoY29udm9sdXRpb25hbCBuZXVyYWwgbmV0cywgYXV0b2VuY29kZXJzLCBub3JtYWxpemluZyBmbG93cywgZGlmZnVzaW9ucywgYXR0ZW50aW9uIGFuZCB0cmFuc2Zvcm1lcnMpIHRoYXQgY2FuIGJlIHdpZGVseSBhcHBsaWVkIHRvIHNvbHZlIHByb2JsZW1zIGxpa2UgbmF0dXJhbCBsYW5ndWFnZSB1bmRlcnN0YW5kaW5nLCBpbWFnZSByZWNvZ25pdGlvbiwgcHJvdGVpbiBmb2xkaW5nLi4uIgoKPGJyLz4KCiMjIyAxNy4gIk1vcmUgdGhhbiAxMGsgc2NpZW50aWZpYyBwYXBlcnMgd2VyZSByZXRyYWN0ZWQgaW4gMjAyMyIgKERlY2VtYmVyIDE4LCAyMDIzKQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDIzLzEyLzE4L21vcmUtdGhhbi0xMGstc2NpZW50aWZpYy1wYXBlcnMtd2VyZS1yZXRyYWN0ZWQtaW4tMjAyMy8KCkRpc2N1c3Npb24gb2YgaG93IENoYXRHUFQtZ2VuZXJhdGVkIHBhcGVycyBhcmUgYmVpbmcgZGV0ZWN0ZWQgYW5kIHRoZSBpbXBhY3Qgb24gc2NpZW50aWZpYyBwdWJsaXNoaW5nLgoKPGJyLz4KCiMjIyAxOC4gIkV4cGxhaW5hYmxlIEFJIHdvcmtzLCBidXQgb25seSB3aGVuIHdlIGRvbid0IG5lZWQgaXQiIChEZWNlbWJlciAxOSwgMjAyMykKaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvMjAyMy8xMi8xOS9leHBsYWluYWJsZS1haS13b3Jrcy1idXQtb25seS13aGVuLXdlLWRvbnQtbmVlZC1pdC8KCkplc3NpY2EgSHVsbG1hbiByZXBvcnRzIG9uIGEgTmV1cklQUyB0YWxrIGJ5IFVscmlrZSBMdXhidXJnIGdpdmluZyAiYSBzb3J0IG9mIGltcG9zc2liaWxpdHkgcmVzdWx0IGZvciBleHBsYWluYWJsZSBBSSwiIGRpc3Rpbmd1aXNoaW5nIGNvb3BlcmF0aXZlIHZzLiBhZHZlcnNhcmlhbCBzY2VuYXJpb3MgZm9yIEFJIGV4cGxhbmF0aW9ucyBhbmQgc2hvd2luZyBmdW5kYW1lbnRhbCBsaW1pdGF0aW9ucyBvZiBtZXRob2RzIGxpa2UgU0hBUCBhbmQgTElNRS4KCi0tLQoKIyMgMjAyNAoKIyMjIDE5LiAiUHJvZ3Jlc3MgaW4gMjAyMyIgKEphbnVhcnkgNCwgMjAyNCkKaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvMjAyNC8wMS8wNC9wcm9ncmVzcy1pbi0yMDIzLwoKTGlzdHMgIkFydGlmaWNpYWwgaW50ZWxsaWdlbmNlIGFuZCBhZXN0aGV0aWMganVkZ21lbnQiIGFtb25nIEFuZHJldydzIHB1YmxpY2F0aW9ucyBmb3IgMjAyMy4KCjxici8+CgojIyMgMjAuICJJbnRlcm5hdGlvbmFsIENoZXJyeSBCbG9zc29tIFByZWRpY3Rpb24gQ29tcGV0aXRpb24gd2l0aCBBSSIgKEZlYnJ1YXJ5IDIwMjQpCmh0dHBzOi8vc3RhdG1vZGVsaW5nLnN0YXQuY29sdW1iaWEuZWR1L3RhZy9haS8KCiJUaGlzIHllYXIsIGNvbnRlc3RhbnRzIHdpbGwgbm90IG9ubHkgY29tcGV0ZSBhZ2FpbnN0IGVhY2ggb3RoZXIgZm9yIHRoZSB0b3AgcHJpemVz4oCUYnV0IGFnYWluc3QgYXJ0aWZpY2lhbCBpbnRlbGxpZ2VuY2UuIFdlIHdpbGwgaW5jbHVkZSBvbmUgb3IgbW9yZSBzdWJtaXNzaW9ucyBmcm9tIHRoZSBtb3N0IHBvcHVsYXIgbGFyZ2UgbGFuZ3VhZ2UgbW9kZWxzLi4uIEFueSBodW1hbiB0aGF0IGJlYXRzIHRoZSBBSSB3aWxsIHJlY2VpdmUgY29tbWVtb3JhdGl2ZSBtZW1vcmFiaWxpYSBpbmRpY2F0aW5nIHRoZXkgJ2JlYXQgdGhlIGJvdCBpbiB0aGUgMjAyNSBJbnRlcm5hdGlvbmFsIENoZXJyeSBCbG9zc29tIFByZWRpY3Rpb24gQ29tcGV0aXRpb24uJyIKCjxici8+CgojIyMgMjEuICJCcm9hZGVyIGltcGFjdCBzdGF0ZW1lbnRzIGluIG1hY2hpbmUgbGVhcm5pbmcgcGFwZXJzIiAoRmVicnVhcnkgMjgsIDIwMjQpCmh0dHBzOi8vc3RhdG1vZGVsaW5nLnN0YXQuY29sdW1iaWEuZWR1LzIwMjQvMDIvMjgvCgpKZXNzaWNhIEh1bGxtYW4gZGlzY3Vzc2VzIE5ldXJJUFMgcmVxdWlyZW1lbnRzIGZvciBicm9hZGVyIGltcGFjdCBzdGF0ZW1lbnRzLCBub3RpbmcgIkRvdWJ0cyBhYm91dCB3aGV0aGVyIEFJL01MIHJlc2VhcmNoZXJzIGFyZSBxdWFsaWZpZWQgdG8gYmUgcmVmbGVjdGluZyBvbiB0aGUgYnJvYWRlciBpbXBhY3RzIG9mIHRoZWlyIHdvcmsuIgoKPGJyLz4KCiMjIyAyMi4gIlJlLXJlYWRpbmcgTmV1cm9tYW5jZXIgaW4gdGhlIGFnZSBvZiBBSSIgKDIwMjQpCmh0dHBzOi8vc3RhdG1vZGVsaW5nLnN0YXQuY29sdW1iaWEuZWR1L3RhZy9haS8KClBoaWwgcmV2aXNpdHMgR2lic29uJ3MgMTk4NCBub3ZlbDogIkluIE5ldXJvbWFuY2VyIHdlIGVuY291bnRlciB0d28gdHlwZXMgb2YgYXJ0aWZpY2lhbCBpbnRlbGxpZ2VuY2U6IGFydGlmaWNpYWwgX2dlbmVyYWxfIGludGVsbGlnZW5jZSwgYXMgcGVyc29uaWZpZWQgKG1hY2hpbmlmaWVkPykgYnkgQUkncyBrbm93biBhcyBXaW50ZXJtdXRlIGFuZCBOZXVyb21hbmNlcjsgYW5kICdjb25zdHJ1Y3RzJy4uLiBKdXN0IHRoaW5rIG9mIHRoZSBjb25zdHJ1Y3QgYXMgYW4gTExNIHRoYXQgaXMgdHJhaW5lZCB0byByZXNwb25kIGxpa2UgYSBzcGVjaWZpYyByZWFsIHBlcnNvbi4iCgo8YnIvPgoKIyMjIDIzLiAiTW9yZSByZWQgbWVhdCBmb3IgeW91IEFJIHNrZXB0aWNzIG91dCB0aGVyZSIgKE1heSAyMDI0KQpDb250aW51ZWQgZG9jdW1lbnRhdGlvbiBvZiBBSSBsaW1pdGF0aW9ucyBhbmQgaHlwZS4KCjxici8+CgojIyMgMjQuICJGb3JraW5nIHBhdGhzIGluIExMTXMgZm9yIGRhdGEgYW5hbHlzaXMiIChKdW5lIDI0LCAyMDI0KQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDI0LzA2LzI0L2ZvcmtpbmctcGF0aHMtaW4tbGxtcy1mb3ItZGF0YS1hbmFseXNpcy8KCiJMTE1zIGFyZSB0aHJlYXRlbmluZyBiZWNhdXNlIHRoZXkgd291bGQgc2VlbSB0byBtYWtlIHRoaXMga2luZCBvZiBhcHByb2FjaCBlYXNpZXIuIEZvciBleGFtcGxlLCBkZWFsaW5nIHdpdGggZGF0YSBmb3JtYXR0aW5nIGlzc3VlcyByZW1haW5zIGEgbWFqb3IgdGltZS1zaW5rIGluIGFuYWx5c2lzLCBlc3BlY2lhbGx5IGZvciB1c2VycyB3aG8gYXJlIG5vdCBwcm9ncmFtbWVycywgYnV0IENoYXRHUFQgYXQgbGVhc3Qgc3VwZXJmaWNpYWxseSBzZWVtcyB0b2xlcmFudCBvZiB3aGF0ZXZlciB5b3Ugd2FudCB0byBwYXN0ZSBpbi4iCgo8YnIvPgoKIyMjIDI1LiAiTmV1cklQUyAyMDI0IHdvcmtzaG9wIG9uIFN0YXRpc3RpY2FsIEZyb250aWVycyBpbiBMTE1zIGFuZCBGb3VuZGF0aW9uIE1vZGVscyIgKEF1Z3VzdCA5LCAyMDI0KQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDI0LzA4LzA5L25ldXJpcHMtMjAyNC13b3Jrc2hvcC1vbi1zdGF0aXN0aWNhbC1mcm9udGllcnMtaW4tbGxtcy1hbmQtZm91bmRhdGlvbi1tb2RlbHMvCgpKZXNzaWNhIEh1bGxtYW4gYW5ub3VuY2VzIGEgd29ya3Nob3Agb24gInN0YXRpc3RpY2FsIG1ldGhvZHMgZGV2ZWxvcG1lbnQgZm9yIExMTXMgYW5kIGZvdW5kYXRpb24gbW9kZWxzLCIgY292ZXJpbmcgdG9waWNzIGluY2x1ZGluZyAiV2F0ZXJtYXJraW5nLi4uIGZvciBpZGVudGlmeWluZyBBSS1nZW5lcmF0ZWQgY29udGVudCwiICJDb25mb3JtYWwgcHJlZGljdGlvbiBhbmQgYmxhY2stYm94IHVuY2VydGFpbnR5IHF1YW50aWZpY2F0aW9uLCIgYW5kICJBdWRpdGluZywgc2FmZXR5LCBhbmQgcmlzayBhbmFseXNpcy4iCgo8YnIvPgoKIyMjIDI2LiAiTmV3IENvdXJzZTogUHJlZGljdGlvbiBmb3IgKEluZGl2aWR1YWxpemVkKSBEZWNpc2lvbi1tYWtpbmciIChEZWNlbWJlciA2LCAyMDI0KQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDI0LzEyLzA2L25ldy1jb3Vyc2UtcHJlZGljdGlvbi1mb3ItaW5kaXZpZHVhbGl6ZWQtZGVjaXNpb24tbWFraW5nLwoKQ291cnNlIHN5bGxhYnVzIHdpdGggZXh0ZW5zaXZlIEFJLXJlbGF0ZWQgcmVhZGluZ3MgaW5jbHVkaW5nIHBhcGVycyBvbiBBSS1hc3Npc3RlZCBkZWNpc2lvbiBtYWtpbmcsIEFJIHJlbGlhbmNlLCBhbmQgaHVtYW4tQUkgaHlicmlkIHN5c3RlbXMuCgotLS0KCiMjIDIwMjUKCiMjIyAyNy4gIkxhcmdlIExhbmd1YWdlIE1vZGVscyAoTExNcykgRmx1bmsgdGhlIFdvcmQgR2FtZSBDb25uZWN0aW9ucyIgKEphbnVhcnkgMjAyNSkKaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvCgpHYXJ5IFNtaXRoJ3MgZXhwZXJpbWVudHMgc2hvd2luZyAiTExNcyBhcmUgdW5kZW5pYWJseSBhc3RvbmlzaGluZ2x5IGdvb2QgYXQgdXNpbmcgdGhlIHRleHQgdGhleSB0cmFpbmVkIG9uIChhaWRlZCBieSBodW1hbiBmaW5lIHR1bmVycykgdG8gZ2VuZXJhdGUgY29udmluY2luZyBwcm9zZS4gQnV0IHRoZXkgYXJlIHJlYWxseSBiYWQgYXQgZGlzdGluZ3Vpc2hpbmcgYmV0d2VlbiB0cnV0aCBhbmQgZmFsc2Vob29kcyBhbmQgcmVzcG9uZGluZyB0byBwcm9tcHRzIHRoYXQgYXJlIHVubGlrZSBvciBldmVuIHNsaWdodGx5IGRpZmZlcmVudCBmcm9tIHdoYXQgdGhleSB0cmFpbmVkIG9uLiIKCjxici8+CgojIyMgMjguICJQcm9ncmVzcyBpbiAyMDI0IChBa2kpIiAoSmFudWFyeSA3LCAyMDI1KQpodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS8yMDI1LzAxLzA3L3Byb2dyZXNzLWluLTIwMjQtYWtpLwoKQWtpIFZlaHRhcmkncyBhbm51YWwgcHJvZ3Jlc3MgcmVwb3J0LCBpbmNsdWRpbmcgZGlzY3Vzc2lvbiBvZiBBSSB0b29scyBmb3IgY29kaW5nIGVmZmljaWVuY3kuCgotLS0KCiMgS2V5IFJlY3VycmluZyBUaGVtZXMgQWNyb3NzIFBvc3RzCgoxLiAqKkFJIEh5cGUgdnMuIFJlYWxpdHkqKjogR2VsbWFuIGFuZCBjb2xsYWJvcmF0b3JzIGNvbnNpc3RlbnRseSBkb2N1bWVudCB0aGUgZ2FwIGJldHdlZW4gQUkgbWFya2V0aW5nIGNsYWltcyBhbmQgYWN0dWFsIGNhcGFiaWxpdGllcywgcGFydGljdWxhcmx5IEdhcnkgU21pdGgncyBjcml0aXF1ZXMKCjIuICoqTExNIExpbWl0YXRpb25zKio6IE11bHRpcGxlIHBvc3RzIGV4cGxvcmUgd2hhdCBDaGF0R1BUL0dQVC00IGNhbiBhbmQgY2Fubm90IGRvIChhcml0aG1ldGljLCByZWFzb25pbmcsIHVuZGVyc3RhbmRpbmcgdnMuIHBhdHRlcm4gbWF0Y2hpbmcpCgozLiAqKlN0YXRpc3RpY3MtTUwgVHJhbnNsYXRpb24qKjogU2V2ZXJhbCBwb3N0cyBleHBsb3JlIGhvdyBzdGF0aXN0aWNhbCBjb25jZXB0cyB0cmFuc2xhdGUgKG9yIGRvbid0KSB0byBtYWNoaW5lIGxlYXJuaW5nIHRlcm1pbm9sb2d5Cgo0LiAqKkV4cGxhaW5hYmxlIEFJIFNrZXB0aWNpc20qKjogSmVzc2ljYSBIdWxsbWFuJ3MgcG9zdHMgZXhwcmVzcyBza2VwdGljaXNtIGFib3V0IFhBSSBtZXRob2RzIGFuZCB0aGVpciBwcmFjdGljYWwgdXRpbGl0eQoKNS4gKipBSSBpbiBTY2llbnRpZmljIFByYWN0aWNlKio6IENvbmNlcm5zIGFib3V0IEFJLWdlbmVyYXRlZCBwYXBlcnMsIHJlc2VhcmNoIGZyYXVkIGRldGVjdGlvbiwgYW5kIEFJJ3Mgcm9sZSBpbiBkYXRhIGFuYWx5c2lzCgo2LiAqKlBoaWxvc29waGljYWwgUXVlc3Rpb25zKio6IFBvc3RzIGV4cGxvcmluZyB3aGV0aGVyIExMTXMgInVuZGVyc3RhbmQiIGFueXRoaW5nLCBjb25zY2lvdXNuZXNzLCBhbmQgdGhlIGRpc3RpbmN0aW9uIGJldHdlZW4gQUkgYW5kIEFHSQoKLS0tCgojIFNvdXJjZXMKCiMjIFRlcnJ5IFNwZWVkIFNvdXJjZXMKCi0gV0VISSBSZXNlYXJjaGVyIFByb2ZpbGU6IGh0dHBzOi8vd3d3LndlaGkuZWR1LmF1L3Jlc2VhcmNoZXIvdGVycnktc3BlZWQvCi0gV2lraXBlZGlhOiBodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9UZXJyeV9TcGVlZAotIElNUyBUZWFjaGluZyBTdGF0aXN0aWNzIGFydGljbGU6IGh0dHBzOi8vaW1zdGF0Lm9yZy8yMDE3LzEwLzAyL3RlYWNoaW5nLXN0YXRpc3RpY3MtaW4tdGhlLWFnZS1vZi1kYXRhLXNjaWVuY2UvCi0gQU1TVEFUIEludGVydmlldyAyMDE2OiBodHRwczovL21hZ2F6aW5lLmFtc3RhdC5vcmcvYmxvZy8yMDE2LzA5LzAxL3RlcnJ5c3BlZWRpbnRlcnZpZXcvCi0gV0VISSBBSSBhcnRpY2xlIDIwMjM6IGh0dHBzOi8vd3d3LndlaGkuZWR1LmF1L25ld3MvbGVhcGluZy1pbnRvLXRoZS1kaWdpdGFsLWZ1dHVyZS1haS1hdC13ZWhpLwoKIyMgQW5kcmV3IEdlbG1hbidzIEJsb2c6IAoKLSBNYWluIHNpdGU6IGh0dHBzOi8vc3RhdG1vZGVsaW5nLnN0YXQuY29sdW1iaWEuZWR1LwotIEFJIHRhZzogaHR0cHM6Ly9zdGF0bW9kZWxpbmcuc3RhdC5jb2x1bWJpYS5lZHUvdGFnL2FpLwotIENoYXRHUFQgdGFnOiBodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS90YWcvY2hhdGdwdC8KLSBMTE0gdGFnOiBodHRwczovL3N0YXRtb2RlbGluZy5zdGF0LmNvbHVtYmlhLmVkdS90YWcvbGxtLwoKPCEtLQoKPGJyLz4KCiBSZWZlcmVuY2VzIAoKPGRpdiBpZD0icmVmcyI+PC9kaXY+CgotLT4KCjxici8+CgoKYGBge3IsIGVjaG89RkFMU0V9CiAga25pdHI6OmtuaXRfZXhpdCgpCmBgYAoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKIEFSQ0hJVkVEIENPREUgQkVMT1cKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKCgogICAgCjwhLS0gVG8gcnVuCiMgbm9odXAgUnNjcmlwdCAtZSAia25pdHI6OmtuaXQyaHRtbCgnaW5kZXguUm1kJykiID4gaW5kZXgubG9nICAmCiAgICAKIyBPciAKIyBub2h1cCBSc2NyaXB0IC1lICJybWFya2Rvd246OnJlbmRlcignaW5kZXguUm1kJykiID4gaW5kZXgubG9nICAmCiAgICAKLS0+Cg==</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("index.Rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
