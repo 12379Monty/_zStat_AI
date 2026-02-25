@@ -191,7 +191,16 @@ data  in the face of variability.^[
 Believe you me, without a trace of presumption, I can vouch that there are 
 countless opportunities for a small dose of statistical judgement to
 alleviate ills that may be afflicting an analysis and report.
-Yet, here I yam.]
+The last place I worked at was staffed by the brightest young minds.
+I mean google smart.  Still I don't think there was a single presentation
+that wasn't tainted by ill-advised p-values, analyzing the data on the
+wrong scale, wrong objectives (assumed but never explicitly stated),
+interpreting model coefficients without examining the fit.  Yet, here I yam.
+The kids could have, and would have, very easily incorporated suitable
+adjustments to their analyses, but the managers were emphatically uninterested.
+When your bonus is to a large extent determined by the calendar dates,
+and everyone agrees that methods don't matter, there is literally no point
+in improving analyses.]
 
 <br/>
 
